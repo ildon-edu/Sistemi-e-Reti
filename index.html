@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemi &amp; Reti – Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  :root {
+    --accent:     #00c8ff;
+    --accent-rgb: 0, 200, 255;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+  <header>
+    <div class="hbadge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+    <h1>SCEGLI <em>L'UNITÀ</em></h1>
+    <p class="subtitle">// Seleziona un argomento per iniziare a studiare //</p>
+    <div class="statsbar">
+      <div class="stat">
+        <div class="stat-n">9</div>
+        <div class="stat-l">Unità</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">47</div>
+        <div class="stat-l">Argomenti</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">∞</div>
+        <div class="stat-l">Da imparare</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <a class="card" href="pages/unita1_web_http.html" style="--c:#00c8ff; --cr:0,200,255;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 01</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">WEB E HTTP</div>
+        <div class="card-desc">Il protocollo fondamentale del Web, architettura client-server, richieste e risposte HTTP.</div>
+        <div class="tags">
+          <span class="tag">HTTP</span>
+          <span class="tag">URL</span>
+          <span class="tag">Client-Server</span>
+          <span class="tag">GET · POST</span>
+          <span class="tag">HTTPS</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita2_servizi_internet.html" style="--c:#39ff8f; --cr:57,255,143;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 02</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">SERVIZI INTERNET</div>
+        <div class="card-desc">DNS, posta elettronica e trasferimento file: i protocolli che alimentano Internet.</div>
+        <div class="tags">
+          <span class="tag">DNS</span>
+          <span class="tag">SMTP</span>
+          <span class="tag">POP3</span>
+          <span class="tag">IMAP</span>
+          <span class="tag">FTP</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita3_sicurezza_informatica.html" style="--c:#ff4757; --cr:255,71,87;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 03</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">SICUREZZA INFORMATICA</div>
+        <div class="card-desc">Vulnerabilità, minacce, attacchi informatici e normativa GDPR per la protezione dei dati.</div>
+        <div class="tags">
+          <span class="tag">CIA</span>
+          <span class="tag">Malware</span>
+          <span class="tag">DoS · DDoS</span>
+          <span class="tag">APT</span>
+          <span class="tag">GDPR</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita4_crittografia.html" style="--c:#c77dff; --cr:199,125,255;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 04</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">CRITTOGRAFIA</div>
+        <div class="card-desc">Cifratura simmetrica e asimmetrica, firma digitale, certificati X.509 e blockchain.</div>
+        <div class="tags">
+          <span class="tag">AES</span>
+          <span class="tag">RSA</span>
+          <span class="tag">Hash</span>
+          <span class="tag">PKI</span>
+          <span class="tag">Blockchain</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita5_vpn_protocolli_sicuri.html" style="--c:#48cae4; --cr:72,202,228;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 05</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">VPN E PROTOCOLLI SICURI</div>
+        <div class="card-desc">Reti private virtuali, tunneling cifrato e protocolli sicuri per comunicazioni protette.</div>
+        <div class="tags">
+          <span class="tag">VPN</span>
+          <span class="tag">IPSec</span>
+          <span class="tag">TLS · SSL</span>
+          <span class="tag">HTTPS</span>
+          <span class="tag">PGP</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita6_sicurezza_perimetrale.html" style="--c:#ff6b35; --cr:255,107,53;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 06</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">SICUREZZA PERIMETRALE</div>
+        <div class="card-desc">ACL, firewall, DMZ e sicurezza Wi-Fi per proteggere il perimetro della rete aziendale.</div>
+        <div class="tags">
+          <span class="tag">ACL</span>
+          <span class="tag">Firewall</span>
+          <span class="tag">DMZ</span>
+          <span class="tag">WPA3</span>
+          <span class="tag">IDS · IPS</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita7_data_center_virtuale.html" style="--c:#ffd166; --cr:255,209,102;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 07</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">DATA CENTER VIRTUALE</div>
+        <div class="card-desc">Dal CED fisico alla virtualizzazione: hypervisor, storage, vSwitch, cluster e migrazione.</div>
+        <div class="tags">
+          <span class="tag">Hypervisor</span>
+          <span class="tag">VM</span>
+          <span class="tag">SAN · RAID</span>
+          <span class="tag">Snapshot</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita8_cloud_computing.html" style="--c:#a8ff3e; --cr:168,255,62;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 08</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">CLOUD COMPUTING</div>
+        <div class="card-desc">Modelli di servizio e distribuzione cloud, microservizi, container e orchestrazione.</div>
+        <div class="tags">
+          <span class="tag">IaaS</span>
+          <span class="tag">PaaS</span>
+          <span class="tag">SaaS</span>
+          <span class="tag">Container</span>
+          <span class="tag">Kubernetes</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+    <a class="card" href="pages/unita9_internet_of_things.html" style="--c:#ff6eb4; --cr:255,110,180;">
+      <div class="card-bar"></div>
+      <div class="card-head">
+        <span class="card-num">UNITÀ 09</span>
+        <span class="card-glyph">◈</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">INTERNET OF THINGS</div>
+        <div class="card-desc">Sensori, gateway, Edge Computing, Big Data e applicazioni IoT nell'industria 4.0.</div>
+        <div class="tags">
+          <span class="tag">MQTT</span>
+          <span class="tag">ZigBee</span>
+          <span class="tag">LoRaWAN</span>
+          <span class="tag">Edge</span>
+          <span class="tag">Big Data</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>APRI UNITÀ</span>
+        <span class="arrow">›</span>
+      </div>
+      <div class="card-progress"></div>
+    </a>
+
+  </div>
+
+  <footer>◈ INFORMATICA · SISTEMI &amp; RETI ◈</footer>
+</div>
+</body>
+</html>

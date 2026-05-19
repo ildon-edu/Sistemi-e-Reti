@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 1 – Web e HTTP</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #00c8ff;
+    --accent-rgb: 0, 200, 255;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+  <header>
+    <div class="header-badge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+    <h1>UNITÀ 1 – <span>WEB e HTTP</span></h1>
+    <p class="subtitle">// Il Web, l'architettura client-server e il protocollo HTTP //</p>
+  </header>
+
+  <!-- 1.1 -->
+  <div class="section-label">◈ 1.1 Il mondo di Internet</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num">1.1</span>
+      <span class="topic-title">IL MONDO DI INTERNET</span>
+    </div>
+    <div class="topic-body">
+      <p>La fusione tra <strong>microelettronica</strong> e <strong>Internet</strong> ha generato una trasformazione senza precedenti nella storia umana. La tecnologia del silicio è diventata sempre più piccola, veloce ed economica (Legge di Moore), mentre Internet ha permesso uno scambio di informazioni senza limiti né barriere.</p>
+      <p>I dati raccolti da dispositivi e sensori vengono elaborati da motori software che cercano di estrarne il significato nascosto. Tecnologie come <strong>Cloud Computing</strong>, <strong>Internet of Things</strong>, <strong>Social Network</strong>, <strong>Machine Learning</strong> e <strong>Intelligenza Artificiale</strong> si sono già integrate nelle nostre abitudini.</p>
+      <div class="infobox yellow">
+        <div class="infobox-title">⚠ Etica dell'IA</div>
+        I sei pilastri dell'etica dell'Intelligenza Artificiale: <strong>equità, fiducia, privacy, inclusione, responsabilità, trasparenza</strong>. Le decisioni delle macchine si basano su algoritmi con potenziali rischi di parzialità.
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="section-label">◈ 1.2 La nascita del Web</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">1.2</span>
+      <span class="topic-title">LA NASCITA DEL WEB</span>
+    </div>
+    <div class="topic-body">
+      <p>Nel <strong>1990</strong>, Tim Berners-Lee, ricercatore al CERN di Ginevra, propose un progetto per condividere informazioni in modo semplice e rapido tra ricercatori. I testi si trasformarono in <strong>ipertesti</strong>: nacque il World Wide Web.</p>
+      <ul>
+        <li><strong>HTML</strong> (HyperText Markup Language): linguaggio standard per le pagine Web</li>
+        <li><strong>HTTP</strong> (HyperText Transfer Protocol): protocollo di comunicazione del Web</li>
+        <li>Nascono i primi <strong>browser</strong> per navigare in Internet</li>
+        <li>Il <strong>30 aprile 1993</strong> il CERN rende pubblico il software World Wide Web</li>
+        <li>Nel <strong>1994</strong> viene fondato il <strong>W3C</strong> (World Wide Web Consortium), la comunità che sviluppa gli standard Web</li>
+      </ul>
+      <div class="infobox">
+        <div class="infobox-title">💡 Ipertesto</div>
+        Un <strong>ipertesto</strong> è un documento consultabile in modo non lineare, passando da un punto all'altro tramite <strong>link</strong> (parole o immagini cliccabili). Un documento <strong>ipermediale</strong> è un ipertesto che include anche contenuti multimediali (audio, video, immagini).
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.3 -->
+  <div class="section-label">◈ 1.3 Il livello di applicazione</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">1.3</span>
+      <span class="topic-title">IL LIVELLO DI APPLICAZIONE</span>
+    </div>
+    <div class="topic-body">
+      <p>Il <strong>livello di applicazione</strong> è il livello più vicino all'utente e funge da interfaccia tra le applicazioni software e i livelli sottostanti che permettono il transito dei messaggi in rete.</p>
+      <p>Nell'architettura <strong>TCP/IP</strong> questo livello ingloba i tre strati superiori del modello ISO/OSI (sessione, presentazione e applicazione), comprendendo formattazione dei dati, compressione e crittografia.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>PROTOCOLLO</th><th>DESCRIZIONE</th><th>PORTA</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="tag cyan">HTTP</span></td><td>Protocollo di trasferimento ipertesti – fondamento delle app Web</td><td>80</td></tr>
+            <tr><td><span class="tag green">DNS</span></td><td>Domain Name System – risoluzione dei nomi di dominio</td><td>53</td></tr>
+            <tr><td><span class="tag orange">FTP</span></td><td>File Transfer Protocol – trasferimento file su server remoti</td><td>20/21</td></tr>
+            <tr><td><span class="tag yellow">SMTP</span></td><td>Simple Mail Transfer Protocol – invio posta elettronica</td><td>25</td></tr>
+            <tr><td><span class="tag yellow">POP3/IMAP</span></td><td>Ricezione posta elettronica</td><td>110/143</td></tr>
+            <tr><td><span class="tag cyan">DHCP</span></td><td>Dynamic Host Configuration Protocol – assegnazione dinamica IP</td><td>67/68</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.4 -->
+  <div class="section-label">◈ 1.4 Funzionamento di un server Web</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num yellow">1.4</span>
+      <span class="topic-title">FUNZIONAMENTO DI UN SERVER WEB</span>
+    </div>
+    <div class="topic-body">
+      <p>Il <strong>server Web</strong> è l'applicazione software in esecuzione su un server che fornisce i contenuti Web richiesti. Il software sul server prende il nome di <strong>demone HTTP</strong> (HTTPd – HyperText Transfer Protocol Daemon).</p>
+      <p>Il demone è costantemente in ascolto (primitiva <em>listen</em>) di richieste dal client. Quando una richiesta arriva, cerca di soddisfarla individuando il file cercato e inviandolo al client con le relative metainformazioni.</p>
+      <p>Nei sistemi UNIX/Linux il demone può <strong>clonare se stesso</strong> generando un processo figlio identico, tornando subito in ascolto. Il figlio recupera il documento, lo invia al client e chiude la connessione.</p>
+
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-box-title">⬡ Pagina Statica</div>
+          <ul>
+            <li>Il file HTML è già presente in memoria</li>
+            <li>Il server lo recupera e lo invia direttamente al client</li>
+            <li>Il contenuto <strong>non cambia mai</strong></li>
+          </ul>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">⬡ Pagina Dinamica</div>
+          <ul>
+            <li>Il file HTML viene generato da uno <strong>script lato server</strong></li>
+            <li>L'output varia in base ai parametri ricevuti</li>
+            <li>Linguaggi: <strong>PHP, ASP, JSP, Python</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title">1.4.1 · ARCHITETTURA CLIENT-SERVER</div>
+        <p>L'architettura di un'applicazione di rete si basa sullo scambio di informazioni tra due soggetti: <strong>client</strong> e <strong>server</strong>.</p>
+        <ul>
+          <li>Il <strong>client</strong> fa una richiesta di una risorsa: può essere un qualsiasi browser (Chrome, Firefox…)</li>
+          <li>Il <strong>server</strong> risponde tipicamente con un file HTML che il browser interpreta e visualizza</li>
+          <li>Il percorso per individuare le informazioni è specificato nell'<strong>URL</strong></li>
+          <li>Client e server possono essere su macchine diverse o sulla <strong>stessa macchina</strong></li>
+        </ul>
+        <div class="infobox yellow">
+          <div class="infobox-title">⬡ Architettura Three-Tier</div>
+          Un'applicazione Web completa si struttura su tre livelli: <strong>1.</strong> interfaccia utente (browser) · <strong>2.</strong> logica di funzionamento (server Web) · <strong>3.</strong> accesso ai dati (DBMS server). In ogni livello adiacente, il livello più vicino all'utente è sempre client, l'ultimo è sempre server.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.5 -->
+  <div class="section-label">◈ 1.5 Il protocollo HTTP</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num">1.5</span>
+      <span class="topic-title">IL PROTOCOLLO HTTP</span>
+    </div>
+    <div class="topic-body">
+      <p><strong>HTTP</strong> (HyperText Transfer Protocol), insieme a <strong>HTTPS</strong> (la versione sicura), è il protocollo che costituisce il fondamento della comunicazione del Web. Opera a livello applicazione nel modello client-server.</p>
+      <p>HTTP trasmette i dati in formato testuale (<strong>ASCII</strong>), servendosi dei protocolli IP (livello di rete) e TCP (livello trasporto). Una sessione si stabilisce con una richiesta di connessione TCP alla <strong>porta 80</strong> (o 443 per HTTPS).</p>
+
+      <!-- 1.5.1 URI e URL -->
+      <div class="subtopic">
+        <div class="subtopic-title">1.5.1 · URI e URL</div>
+        <ul>
+          <li><strong>URI</strong> (Uniform Resource Identifier): identifica univocamente qualsiasi risorsa tramite uno schema universale</li>
+          <li><strong>URL</strong> (Uniform Resource Locator): sottoinsieme di URI che identifica l'indirizzo Web di una risorsa</li>
+        </ul>
+        <p style="margin-top:10px;">La struttura di un URL si articola in tre parti fondamentali:</p>
+        <div class="code-block">
+<span class="kw">protocollo</span> :// <span class="val">nome host</span> / <span class="cmt">nome file</span>
+
+Struttura completa:
+<span class="kw">protocollo</span>://<span class="val">host</span>[:<span class="val">porta</span>]&lt;/<span class="cmt">percorso</span>&gt;[?<span class="val">querystring</span>][#<span class="val">fragment</span>]
+        </div>
+        <div class="tbl-wrap" style="margin-top:10px;">
+          <table>
+            <thead><tr><th>PROTOCOLLO</th><th>DESCRIZIONE</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag cyan">HTTP</span></td><td>Richiesta elaborata da un server Web</td></tr>
+              <tr><td><span class="tag orange">FTP</span></td><td>Richiesta elaborata da un server FTP</td></tr>
+              <tr><td><span class="tag yellow">MAILTO</span></td><td>Apre un modulo di posta elettronica</td></tr>
+              <tr><td><span class="tag green">FILE</span></td><td>File nel file system locale</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 1.5.2 Richiesta -->
+      <div class="subtopic">
+        <div class="subtopic-title">1.5.2 · LA RICHIESTA DEL CLIENT</div>
+        <p>Un messaggio di richiesta HTTP è una stringa ASCII strutturata. La prima riga contiene:</p>
+        <ul>
+          <li>Il <strong>metodo</strong> da applicare alla risorsa</li>
+          <li>L'<strong>URI</strong> (identificatore della risorsa)</li>
+          <li>La <strong>versione HTTP</strong> (tipicamente 1.1)</li>
+        </ul>
+        <div class="code-block">
+<span class="kw">metodo HTTP</span>  sp  <span class="val">URI</span>  sp  <span class="cmt">versione HTTP</span>  CR LF
+<span class="kw">nome campo</span> : <span class="val">valore</span>  CR LF
+CR LF
+<span class="cmt">body (opzionale)</span>
+        </div>
+        <div class="tbl-wrap" style="margin-top:12px;">
+          <table>
+            <thead><tr><th>METODO</th><th>AZIONE</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag cyan">GET</span></td><td>Richiede una risorsa ospitata sul server</td></tr>
+              <tr><td><span class="tag orange">POST</span></td><td>Invia dati nel corpo del messaggio al server</td></tr>
+              <tr><td><span class="tag green">HEAD</span></td><td>Richiede solo l'intestazione del messaggio di risposta</td></tr>
+              <tr><td><span class="tag yellow">PUT</span></td><td>Scrive o modifica una pagina Web sul server</td></tr>
+              <tr><td><span class="tag orange">DELETE</span></td><td>Cancella una risorsa dal server</td></tr>
+              <tr><td><span class="tag green">OPTIONS</span></td><td>Richiede i metodi supportati dal server</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;">Principali campi delle <strong>metainformazioni</strong> (header):</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>CAMPO</th><th>DESCRIZIONE</th></tr></thead>
+            <tbody>
+              <tr><td>Host</td><td>Nome del server a cui si fa la richiesta</td></tr>
+              <tr><td>User-Agent</td><td>Nome e versione del browser</td></tr>
+              <tr><td>Accept</td><td>Tipi di contenuto accettati</td></tr>
+              <tr><td>Content-Type</td><td>Tipo MIME del contenuto nel body</td></tr>
+              <tr><td>Content-Length</td><td>Lunghezza del body in byte</td></tr>
+              <tr><td>Connection</td><td>Tipo di connessione (es. keep-alive)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 1.5.3 Risposta -->
+      <div class="subtopic">
+        <div class="subtopic-title">1.5.3 · LA RISPOSTA DEL SERVER</div>
+        <p>Anche il messaggio di risposta HTTP è una stringa ASCII. La prima riga contiene la <strong>versione HTTP</strong>, il <strong>codice di stato</strong> e la <strong>descrizione</strong>.</p>
+        <div class="code-block">
+<span class="kw">versione HTTP</span>  sp  <span class="val">codice di stato</span>  sp  <span class="cmt">descrizione</span>  CR LF
+<span class="kw">nome campo</span> : <span class="val">valore</span>  CR LF
+CR LF
+<span class="cmt">body (codice HTML della pagina, se richiesta)</span>
+        </div>
+        <div class="tbl-wrap" style="margin-top:12px;">
+          <table>
+            <thead><tr><th>RANGE</th><th>CATEGORIA</th><th>ESEMPI</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag green">2xx</span></td><td>Successo</td><td>200 OK – Document follows</td></tr>
+              <tr><td><span class="tag yellow">3xx</span></td><td>Ridirezione</td><td>301 Moved Permanently</td></tr>
+              <tr><td><span class="tag orange">4xx</span></td><td>Errore del client</td><td>401 Unauthorized · 403 Forbidden · 404 Not Found</td></tr>
+              <tr><td><span class="tag orange">5xx</span></td><td>Errore del server</td><td>500 Internal Server Error</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;">Il server <strong>non conosce il contenuto</strong> di ciò che invia: è il browser che deve interpretare correttamente i dati e mostrarli all'utente.</p>
+      </div>
+
+      <!-- 1.5.4 Passaggio parametri -->
+      <div class="subtopic">
+        <div class="subtopic-title">1.5.4 · IL PASSAGGIO DI PARAMETRI</div>
+        <p>Le pagine dinamiche ricevono parametri dal client nella forma:</p>
+        <div class="code-block">
+<span class="val">parametro1</span>=<span class="kw">valore1</span>&amp;<span class="val">parametro2</span>=<span class="kw">valore2</span>&amp;<span class="val">parametro3</span>=<span class="kw">valore3</span>
+        </div>
+        <p style="margin-top:8px;">Il server legge la stringa, effettua il <strong>parsing</strong> e utilizza i parametri in base alle necessità. Il metodo di passaggio (GET o POST) determina dove viene inserita la stringa.</p>
+      </div>
+
+      <!-- 1.5.5 GET e POST -->
+      <div class="subtopic">
+        <div class="subtopic-title">1.5.5 · I METODI GET E POST</div>
+        <div class="two-col">
+          <div class="col-box">
+            <div class="col-box-title">⬡ GET</div>
+            <ul>
+              <li>I parametri sono aggiunti all'<strong>URL</strong> dopo il carattere <code>?</code></li>
+              <li>I parametri sono <strong>visibili</strong> nella barra degli indirizzi</li>
+              <li>Lunghezza massima della stringa: <strong>2048 caratteri</strong></li>
+              <li>Il server legge la variabile di ambiente <strong>QUERY_STRING</strong></li>
+            </ul>
+            <div class="code-block" style="margin-top:8px;">
+<span class="kw">http://server/script.php</span>?<span class="val">classe</span>=<span class="cmt">2B</span>&amp;<span class="val">sesso</span>=<span class="cmt">M</span>
+            </div>
+          </div>
+          <div class="col-box c2">
+            <div class="col-box-title">⬡ POST</div>
+            <ul>
+              <li>I parametri vengono inseriti nel <strong>body</strong> della richiesta HTTP</li>
+              <li>I parametri <strong>non sono visibili</strong> nella barra degli indirizzi</li>
+              <li><strong>Nessun limite</strong> predefinito alla lunghezza dei dati</li>
+              <li>Ammette anche valori <strong>binari</strong></li>
+            </ul>
+            <p style="margin-top:8px; font-size:13px;">Il server legge da <strong>standard input</strong> un numero di caratteri pari a <code>CONTENT_LENGTH</code>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.6 -->
+  <div class="section-label">◈ 1.6 Considerazioni finali</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">1.6</span>
+      <span class="topic-title">CONSIDERAZIONI FINALI SU HTTP</span>
+    </div>
+    <div class="topic-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>CARATTERISTICA</th><th>DETTAGLIO</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Stateless</strong> (senza memoria)</td>
+              <td>Ogni richiesta è trattata dal server come unica e indipendente. I problemi vengono risolti con <strong>cookie</strong> e <strong>sessioni</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Asimmetrico</strong> (pull-based)</td>
+              <td>Solo il client può chiamare il server. Non esiste la possibilità inversa.</td>
+            </tr>
+            <tr>
+              <td><strong>Non sicuro</strong></td>
+              <td>Le richieste passano in chiaro. Le credenziali possono essere intercettate. Soluzione: <strong>HTTPS</strong> con crittografia SSL.</td>
+            </tr>
+            <tr>
+              <td><strong>HTTP 1.1</strong> (1997)</td>
+              <td>Introduce le connessioni <strong>persistenti</strong>: più richieste su una singola connessione TCP (default mode).</td>
+            </tr>
+            <tr>
+              <td><strong>HTTP/2</strong> (2015)</td>
+              <td>Pubblicato come RFC 7540. Permette richieste parallele senza attendere le risposte precedenti (eliminando il processo seriale di HTTP/1.1).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="infobox orange" style="margin-top:14px;">
+        <div class="infobox-title">🔒 HTTPS</div>
+        HTTPS usa gli stessi metodi di HTTP ma le richieste e le risposte sono <strong>crittografate</strong> tramite il protocollo <strong>SSL</strong> (Secure Socket Layer). Usa la <strong>porta 443</strong>. Comporta un carico di elaborazione aggiuntivo ma rende sicura la comunicazione.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    IL WEB E I SERVIZI INTERNET · UNITÀ 1 – WEB E HTTP · INFORMATICA · RETI
+  </footer>
+
+</div>
+</body>
+</html>

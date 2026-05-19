@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 9 – L'Internet of Things</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #ff6eb4;
+    --accent-rgb: 255, 110, 180;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+  <header>
+    <div class="header-badge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+    <h1>UNITÀ 9 – <span>L'INTERNET OF THINGS</span></h1>
+    <p class="subtitle">// Sensori, connettività, Big Data e applicazioni IoT //</p>
+  </header>
+
+  <!-- 9.1 -->
+  <div class="section-label">◈ 9.1 L'Internet of Things</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num">9.1.1</span>
+      <span class="topic-title">COS'È L'INTERNET DELLE COSE</span>
+    </div>
+    <div class="topic-body">
+      <p>L'<strong>Internet of Things (IoT)</strong> è un ecosistema di oggetti intelligenti (sensori, attuatori, controllori) che, senza intervento umano, interagiscono con l'ambiente, raccolgono dati e li inviano via Internet a sistemi di elaborazione remota per ottenere informazioni utili.</p>
+      <p>La comunicazione <strong>Machine-to-Machine (M2M)</strong> è alla base di questo ecosistema. I server cloud elaborano i dati grezzi per estrarne valore.</p>
+
+      <div class="subtopic">
+        <div class="subtopic-title">EVOLUZIONE DEI SISTEMI DI ELABORAZIONE</div>
+        <ul>
+          <li><strong>Postazioni fisse (fino ~2000):</strong> «Tu vai al computer»</li>
+          <li><strong>Mobilità (~2005):</strong> «Il computer viene con te»</li>
+          <li><strong>IoT (~2010–oggi):</strong> «I dispositivi si parlano» — dati, cose e persone connessi</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:12px;">Le persone possono anche <em>diventare</em> nodi dell'ecosistema (es. dispositivi indossabili). L'IoT è applicata in ambito industriale, commerciale, energetico, sanitario, educativo e dei servizi.</p>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num">9.1.2</span>
+      <span class="topic-title">LE TECNOLOGIE ABILITANTI</span>
+    </div>
+    <div class="topic-body">
+      <p>Il passaggio dalla raccolta dei dati alla loro trasformazione in informazioni richiede tre tecnologie abilitanti fondamentali:</p>
+
+      <div class="three-col" style="margin-top:12px;">
+        <div class="col-box">
+          <div class="col-box-title">Connettività</div>
+          <p style="font-size:13px;">Collega sensori e attuatori con i sistemi di elaborazione e controllo.</p>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">Cloud Computing</div>
+          <p style="font-size:13px;">Fornisce l'infrastruttura di elaborazione e storage scalabile on-demand.</p>
+        </div>
+        <div class="col-box c3">
+          <div class="col-box-title">Big Data &amp; AI</div>
+          <p style="font-size:13px;">Algoritmi e tecniche per estrarre informazioni dai dati grezzi di livello operativo.</p>
+        </div>
+      </div>
+
+      <div class="infobox yellow" style="margin-top:14px;">
+        <div class="infobox-title">⚑ Industria 4.0 — Quarta Rivoluzione Industriale</div>
+        L'applicazione di queste tecnologie all'industria genera nuovi modelli di business:<br>
+        <strong>Smart production</strong> – macchine digitalizzate e intelligenti · <strong>Smart service</strong> – servizi personalizzati centrati sul cliente · <strong>Smart energy</strong> – riduzione consumi e sprechi energetici.
+      </div>
+    </div>
+  </div>
+
+  <!-- 9.2 -->
+  <div class="section-label">◈ 9.2 Elementi architetturali</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">9.2.1</span>
+      <span class="topic-title">LA RACCOLTA DATI — SENSORI E ATTUATORI</span>
+    </div>
+    <div class="topic-body">
+      <p>I dati vengono raccolti localmente da <strong>sensori</strong> (es. temperatura, wearable) e da <strong>attuatori</strong> (controllano motori, sistemi di sicurezza, ecc.).</p>
+      <ul>
+        <li>I sensori devono avere <strong>bassissimo consumo energetico</strong> e autonomia anche di decenni (installati spesso in luoghi remoti o inaccessibili).</li>
+        <li>Il basso consumo influenza la scelta dei <strong>protocolli di trasmissione</strong>, che devono consumare poche risorse.</li>
+        <li>La scelta del protocollo dipende da: distanza tra sensore e gateway, tipo di applicazione, condizioni ambientali.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">9.2.2</span>
+      <span class="topic-title">GATEWAY · EDGE COMPUTING · FOG COMPUTING</span>
+    </div>
+    <div class="topic-body">
+      <p>Il <strong>gateway</strong> è un sistema intermedio che raccoglie, aggrega e consolida i dati dai diversi nodi eterogenei prima di inviarli al server cloud (che spesso usa protocolli IP diversi da quelli dei sensori).</p>
+
+      <div class="subtopic">
+        <div class="subtopic-title">FUNZIONI PRINCIPALI DEL GATEWAY</div>
+        <ul>
+          <li>Rendere omogeneo il formato dati da dispositivi diversi</li>
+          <li>Raccogliere e immagazzinare i dati localmente</li>
+          <li>Monitorare e gestire i sensori</li>
+          <li>Svolgere funzioni di sicurezza e autenticazione</li>
+          <li>Misurare il consumo delle risorse per la contabilizzazione</li>
+        </ul>
+      </div>
+
+      <div class="two-col" style="margin-top:14px;">
+        <div class="col-box">
+          <div class="col-box-title">Edge Computing</div>
+          <p style="font-size:13px;">L'elaborazione avviene direttamente sui dispositivi o su gateway fisicamente vicini ai sensori. Privilegia il <strong>tempo reale</strong> senza dipendere dal cloud.</p>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">Fog Computing</div>
+          <p style="font-size:13px;">Standard (Cisco/OpenFog) che sposta l'elaborazione sui processori in LAN (più distanti dai sensori). Fornisce le funzioni dell'edge computing + standard di rete tra dispositivi e data center.</p>
+        </div>
+      </div>
+
+      <div class="infobox cyan" style="margin-top:12px;">
+        <div class="infobox-title">ℹ Vantaggi di Edge/Fog</div>
+        Esecuzione di applicazioni in tempo reale senza latenza cloud · Filtraggio dei dati con riduzione del traffico di rete · Continuità del servizio anche senza connessione · Migliore controllo della sicurezza.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">9.2.3</span>
+      <span class="topic-title">L'ACCESSO ALLA RETE — TECNOLOGIE WIRELESS IoT</span>
+    </div>
+    <div class="topic-body">
+      <p>I dispositivi IoT usano tecnologie wireless classificabili per raggio d'azione:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>TIPO</th><th>STANDARD</th><th>DISTANZA</th><th>VELOCITÀ</th><th>USO TIPICO</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Corto raggio (WPAN)</strong></td><td>ZigBee (IEEE 802.15.4), Bluetooth/BLE (IEEE 802.15.1)</td><td>Decine di metri</td><td>Centinaia di kbps</td><td>Domotica, sanità, fitness, industria</td></tr>
+            <tr><td><strong>Medio raggio</strong></td><td>4G/5G (LTE, NB-IoT)</td><td>~10 km</td><td>100 Mbps (4G) – 10 Gbps (5G)</td><td>Dispositivi mobili, connessione al cloud</td></tr>
+            <tr><td><strong>Lungo raggio (LPWAN)</strong></td><td>LoRaWAN, NB-IoT</td><td>5–40 km</td><td>Centinaia di bps/kbps</td><td>Aree rurali/urbane, metering, smart grid</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title">TECNOLOGIA ZigBee</div>
+        <p style="font-size:14px;">Famiglia WPAN basata su IEEE 802.15.4. Supporta topologie a stella, ad albero e mesh. Ogni rete ha un <strong>coordinatore</strong>, dei <strong>router</strong> e dei <strong>dispositivi finali</strong>. Usato soprattutto per smart home, smart metering, smart grid.</p>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title green">TECNOLOGIA LoRaWAN</div>
+        <p style="font-size:14px;">Protocollo open source (LoRa Alliance) per reti LPWAN. Trasmissione bidirezionale su frequenze non licenziate (5–40 km, fino a 50 kbps). Architettura: <strong>nodi finali → gateway → server di rete</strong>. Alta sicurezza con chiavi crittografiche multi-livello (rete, applicazione, nodo).</p>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title orange">TECNOLOGIA 4G / 5G</div>
+        <ul>
+          <li><strong>4G (LTE):</strong> 100 Mbps (alta mobilità) – 1 Gbps (bassa mobilità); include NarrowBand IoT (NB-IoT), una tecnologia LPWAN.</li>
+          <li><strong>5G:</strong> fino a 10 Gbps; pensato come «sistema nervoso della società digitale» — connette miliardi di oggetti, riduce consumi, abilita guida autonoma e industria 4.0. Opera su frequenze licenziate (nessuna interferenza).</li>
+        </ul>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title yellow">PROTOCOLLO MQTT</div>
+        <p style="font-size:14px;"><strong>MQTT (Message Queuing Telemetry Transport)</strong> è uno standard ISO open source, leggero, molto diffuso in IoT. Opera su TCP/IP (e Bluetooth). Si basa sul modello <strong>publish/subscribe</strong>:</p>
+        <ul>
+          <li>I <em>publisher</em> pubblicano messaggi su un <em>topic</em> su un nodo intermedio (<strong>broker</strong>).</li>
+          <li>I <em>subscriber</em> interessati al topic si iscrivono e ricevono i messaggi dal broker (one-to-many).</li>
+          <li>Supporta connessioni a banda ridotta; connessione al server in poche decine di byte.</li>
+        </ul>
+      </div>
+
+      <div class="infobox cyan" style="margin-top:12px;">
+        <div class="infobox-title">ℹ Router vs Gateway IoT</div>
+        <strong>Router</strong> – gestisce il traffico IP da dispositivi LAN verso Internet.<br>
+        <strong>Gateway IoT</strong> – aggrega dispositivi con interfacce eterogenee (IP, Bluetooth, ZigBee, ecc.) prima di accedere alla WAN.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">9.2.4</span>
+      <span class="topic-title">L'ANALISI DEI DATI — BIG DATA</span>
+    </div>
+    <div class="topic-body">
+      <p>I <strong>Big Data</strong> sono enormi quantità di dati eterogenei (ordine degli zettabyte) provenienti da web, social media, sensori IoT, ecc. Vengono analizzati da algoritmi di intelligenza artificiale e machine learning per estrarne valore.</p>
+
+      <p>Le caratteristiche fondamentali sono descritte dalle <strong>quattro V</strong>:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>PROPRIETÀ</th><th>DESCRIZIONE</th><th>RILEVANZA IoT</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Volume</strong></td><td>Quantità inimmaginabile di dati</td><td>Milioni di sensori generano dati ogni secondo in tutto il mondo</td></tr>
+            <tr><td><strong>Velocità</strong></td><td>La raccolta avviene in ore/minuti, non anni</td><td>Dati in tempo reale da attuatori e sensori connessi</td></tr>
+            <tr><td><strong>Varietà</strong></td><td>Dati eterogenei (foto, tweet, misure, ecc.)</td><td>Dati da sensori diversi devono essere unificati e analizzati insieme</td></tr>
+            <tr><td><strong>Veridicità</strong></td><td>I dati devono essere affidabili e rappresentativi</td><td>Il campione deve riflettere correttamente il fenomeno analizzato</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="infobox yellow" style="margin-top:12px;">
+        <div class="infobox-title">⚑ Data Mining</div>
+        Il <strong>data mining</strong> è l'attività che individua associazioni, anomalie e schemi ricorrenti (pattern) tra i dati. Partendo da dati grezzi, sparsi e di natura diversa, produce conoscenza sfruttabile grazie all'elevato parallelismo delle risorse di calcolo.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">9.2.5</span>
+      <span class="topic-title">LE SOLUZIONI ARCHITETTURALI</span>
+    </div>
+    <div class="topic-body">
+      <p>L'interazione tra applicazione IoT e altre componenti funzionali può seguire due modelli:</p>
+
+      <div class="two-col" style="margin-top:12px;">
+        <div class="col-box">
+          <div class="col-box-title">Approccio Verticale (Silos)</div>
+          <ul>
+            <li>Mercati a isole tecnologiche specializzate per settore (automotive, farmaceutica, sanità).</li>
+            <li>Sviluppi dedicati; alti costi di manutenzione.</li>
+            <li>Limiti nella standardizzazione.</li>
+            <li>Usato prevalentemente in passato.</li>
+          </ul>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">Approccio Orizzontale</div>
+          <ul>
+            <li>Piattaforme comuni condivise trasversalmente tra settori diversi (smart home, industria, smart city, sanità).</li>
+            <li>Sensori e componenti indipendenti dall'applicazione specifica.</li>
+            <li>Riduce costi e tempi di sviluppo; riduce il <em>time to market</em>.</li>
+            <li>Richiede una <strong>IoT service enabler platform</strong>: normalizza i dati, gestisce i dispositivi, espone API.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">9.2.6</span>
+      <span class="topic-title">I PROBLEMI DI SICUREZZA</span>
+    </div>
+    <div class="topic-body">
+      <p>I sistemi IoT introducono nuovi vettori di attacco rispetto ai sistemi tradizionali. I tre obiettivi di un attacco sono: <strong>rubare informazioni</strong>, <strong>prendere il controllo</strong> dei dispositivi, <strong>impedire il servizio</strong>.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>ELEMENTO DI CRITICITÀ</th><th>DESCRIZIONE</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Qualità dei dispositivi</strong></td>
+              <td>Software spesso senza aggiornamenti, con vulnerabilità sfruttabili per attacchi ad altri nodi o server della rete.</td>
+            </tr>
+            <tr>
+              <td><strong>Quantità dei dispositivi</strong></td>
+              <td>Numero enorme di sensori → enormi quantità di dati non sempre protetti. Ogni centralizzazione introduce un Single Point of Failure. Scarsità di indirizzi IPv4 obbliga all'uso di NAT (complessità aggiuntiva).</td>
+            </tr>
+            <tr>
+              <td><strong>Posizionamento dei dispositivi</strong></td>
+              <td>Sensori in luoghi remoti/inaccessibili possono restare in funzione per anni senza aggiornamenti, diventando bersagli per attacchi DDoS.</td>
+            </tr>
+            <tr>
+              <td><strong>Impatto sulla privacy</strong></td>
+              <td>Dispositivi wearable, assistenti vocali, videocamere e giocattoli connessi possono mappare movimenti e abitudini. La legge deve definire chi e come può accedere ai dati IoT.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="infobox orange" style="margin-top:12px;">
+        <div class="infobox-title">⚠ Principio chiave della sicurezza IoT</div>
+        La sicurezza deve essere <strong>connaturata all'oggetto e progettata fin dall'inizio</strong>. Non è possibile applicare efficacemente nuove tecnologie di sicurezza a dispositivi già progettati senza di esse. L'introduzione massiccia di <strong>IPv6</strong> (indirizzi quasi illimitati) mitigherà i problemi legati alla scarsità di IPv4.
+      </div>
+    </div>
+  </div>
+
+  <!-- 9.3 -->
+  <div class="section-label">◈ 9.3 Campi di applicazione</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num yellow">9.3</span>
+      <span class="topic-title">PRINCIPALI AMBITI APPLICATIVI IoT</span>
+    </div>
+    <div class="topic-body">
+      <p>L'IoT opera sia nel mercato <strong>B2B</strong> (Business-to-Business) che in quello <strong>B2C</strong> (Business-to-Consumer).</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>SETTORE</th><th>APPLICAZIONI PRINCIPALI</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Industriale &amp; Energetico</strong></td>
+              <td>Geolocalizzazione lavoratori (sicurezza), monitoraggio risorse remote, Smart Grid, Smart Agriculture (irrigazione/fertilizzazione), logistica container, metering (gas/acqua/energia), Industria 4.0, telelavoro/BYOD.</td>
+            </tr>
+            <tr>
+              <td><strong>Commerciale &amp; Retail</strong></td>
+              <td>Riconoscimento e fidelizzazione clienti (beacon Bluetooth), promozioni mirate in negozio, sincronizzazione automatica degli acquisti (es. frigorifero smart).</td>
+            </tr>
+            <tr>
+              <td><strong>Istruzione &amp; Formazione</strong></td>
+              <td>Attività didattiche personalizzate per livello di apprendimento; nuove forme di istruzione online mirate.</td>
+            </tr>
+            <tr>
+              <td><strong>Servizi &amp; Smart City</strong></td>
+              <td>Videosorveglianza, parcheggi intelligenti, gestione emergenze, smart mobility/V2I/V2V (guida autonoma), controllo traffico, riduzione sprechi energetici (luce/acqua), qualità aria.</td>
+            </tr>
+            <tr>
+              <td><strong>Smart Home</strong></td>
+              <td>Domotica, videosorveglianza, elettrodomestici intelligenti, controllo centralizzato dell'abitazione.</td>
+            </tr>
+            <tr>
+              <td><strong>Salute &amp; Benessere</strong></td>
+              <td>Monitoraggio pazienti e persone non autosufficienti, dispositivi wearable (eHealth), controllo parametri vitali.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9.4 -->
+  <div class="section-label">◈ 9.4 Il mercato IoT e la catena del valore</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">9.4</span>
+      <span class="topic-title">MERCATO IoT E CATENA DEL VALORE</span>
+    </div>
+    <div class="topic-body">
+      <p>Il mercato IoT cresce a circa il <strong>37% annuo</strong>. Per il 2025 si stimano circa 1.300 miliardi di dollari complessivi e oltre 22.000 miliardi di oggetti connessi.</p>
+      <p>Non esiste un unico fornitore per una soluzione IoT completa: la catena del valore è articolata in più componenti con costi e complessità molto diversi tra loro.</p>
+
+      <div class="tbl-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>COMPONENTE</th><th>PESO SUL COSTO TOTALE (es. metering gas)</th></tr></thead>
+          <tbody>
+            <tr><td>Connettività</td><td>5–10%</td></tr>
+            <tr><td>Sensoristica e hardware</td><td>Variabile</td></tr>
+            <tr><td>Gateway</td><td>Variabile</td></tr>
+            <tr><td>Cloud e storage</td><td>Variabile</td></tr>
+            <tr><td><strong>Software di lettura/trasformazione dati (app cliente)</strong></td><td><strong>30–50%</strong></td></tr>
+            <tr><td><strong>Gestione e manutenzione</strong></td><td><strong>20–30%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="infobox cyan" style="margin-top:12px;">
+        <div class="infobox-title">ℹ Considerazioni chiave</div>
+        <ul>
+          <li>La soluzione finale è il risultato dell'interazione di diversi fornitori con relazioni tecnologiche, commerciali e standard di mercato.</li>
+          <li>I componenti hardware (es. sensori di umidità) sono spesso riutilizzabili in settori diversi con minime variazioni al firmware.</li>
+          <li>Il software e la gestione hanno il valore economico più alto nella catena; la connettività è la quota minore.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>◈ UNITÀ 9 · L'INTERNET OF THINGS ◈ · Sistemi &amp; Reti</footer>
+</div>
+</body>
+</html>

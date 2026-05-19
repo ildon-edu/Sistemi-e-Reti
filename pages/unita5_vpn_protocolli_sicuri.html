@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 5 – VPN e protocolli sicuri</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #48cae4;
+    --accent-rgb: 72, 202, 228;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+<header>
+  <div class="hbadge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+  <h1>UNITÀ 5 – <span>VPN E PROTOCOLLI SICURI</span></h1>
+  <p class="subtitle">// VPN · IPSec · TLS/SSL · HTTPS · PGP //</p>
+</header>
+
+<!-- ══════════ 5.1 VPN ══════════ -->
+<div class="slabel">◈ 5.1 VPN – Virtual Private Network</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum">5.1</span><span class="ttitle">VPN – VIRTUAL PRIVATE NETWORK</span></div>
+  <div class="tbody">
+    <p>Una <strong>VPN</strong> è una rete privata virtuale che utilizza una rete pubblica (Internet) per collegare terminali remoti come se appartenessero alla stessa LAN. I dati viaggiano in <strong>tunnel crittografati</strong>: cifrati all'entrata, decifrati all'uscita.</p>
+
+    <div class="sub">
+      <div class="stitle">5.1.1 · COS'È UNA VPN</div>
+      <div class="two">
+        <div class="cbox"><div class="cbox-t">Privata</div>Le LAN remote appaiono come un'unica rete privata con gli stessi indirizzamenti e policy di sicurezza</div>
+        <div class="cbox g"><div class="cbox-t">Virtuale</div>I collegamenti non sono fisici ma logici, costruiti sopra un'infrastruttura pubblica (Internet o MPLS)</div>
+      </div>
+      <div class="ib g" style="margin-top:12px"><div class="ib-t">✅ Vantaggi VPN</div>Riduzione costi (no linee dedicate) · Accesso flessibile alle risorse aziendali · Connessioni automaticamente cifrate · Architettura scalabile · Supporto voce e video</div>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">5.1.2 · PERCHÉ UTILIZZARE UNA VPN</div>
+      <div class="two">
+        <div class="cbox"><div class="cbox-t">VPN ad accesso remoto</div>Tutela la privacy, permette l'anonimato e l'accesso a risorse geograficamente bloccate. Il client VPN cifra i pacchetti e li invia al server VPN che li presenta in Internet con il proprio IP.</div>
+        <div class="cbox g"><div class="cbox-t">VPN site-to-site</div>Collega in modo sicuro due o più LAN dislocate sul territorio. Il tunnel è stabilito tra i gateway (router CPE) delle sedi. I dispositivi remoti non necessitano di un client VPN.</div>
+      </div>
+    </div>
+
+    <div class="sub p">
+      <div class="stitle">5.1.3 · TIPI DI VPN</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>TIPO</th><th>CARATTERISTICHE</th><th>TECNOLOGIA</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag y">Trusted VPN</span></td><td>Il fornitore di servizi (ISP) gestisce la sicurezza tracciando i tunnel. Il cliente non si preoccupa del servizio.</td><td>MPLS (Multiprotocol Label Switching): aggiunge una "label" ai pacchetti per gestire il routing all'interno della rete ISP</td></tr>
+            <tr><td><span class="tag b">Secure VPN</span></td><td>Usa la rete pubblica Internet. Il cliente sovrappone la propria topologia logica (overlay network). La sicurezza è garantita da protocolli come IPSec o SSL.</td><td>IPSec, L2TP, SSL</td></tr>
+            <tr><td><span class="tag g">Hybrid VPN</span></td><td>Combina Trusted e Secure VPN, scegliendo il tipo di connessione in base al traffico (QoS, priorità).</td><td>SDN WAN, NFV</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub y">
+      <div class="stitle">5.1.4 · SERVIZI DI SICUREZZA NELLE VPN – AAA</div>
+      <p>Quando un gateway VPN (firewall o router) riceve una richiesta di tunnel, verifica l'identità tramite il server <strong>AAA</strong>:</p>
+      <div class="three">
+        <div class="cbox"><div class="cbox-t">Autenticazione</div><em>"Chi sei"</em><br>Verifica l'identità dell'utente (username/password, certificato)</div>
+        <div class="cbox y"><div class="cbox-t">Autorizzazione</div><em>"Cosa puoi fare"</em><br>Definisce operazioni e servizi accessibili (ACL, privilegi)</div>
+        <div class="cbox g"><div class="cbox-t">Accounting</div><em>"Cosa hai fatto"</em><br>Tiene traccia degli accessi, tempo di connessione, operazioni eseguite</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 5.2 Protocolli sicuri ══════════ -->
+<div class="slabel">◈ 5.2 Protocolli sicuri</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum g">5.2</span><span class="ttitle">PROTOCOLLI SICURI</span></div>
+  <div class="tbody">
+    <p>La crittografia è applicata ai protocolli di comunicazione a diversi livelli del modello OSI. Rendere sicuro un livello garantisce la sicurezza di tutti i livelli superiori.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>LIVELLO OSI</th><th>PROTOCOLLO</th><th>APPLICAZIONE</th></tr></thead>
+        <tbody>
+          <tr><td>Rete</td><td><span class="tag b">IPSec</span></td><td>Protegge indirizzi e contenuto del pacchetto IP</td></tr>
+          <tr><td>Trasporto</td><td><span class="tag g">TLS/SSL</span></td><td>Applicazioni non devono preoccuparsi della sicurezza; si appoggia a TCP</td></tr>
+          <tr><td>Applicazione</td><td><span class="tag p">Kerberos, PGP, SSH, HTTPS</span></td><td>Sicurezza a livello di specifico protocollo applicativo</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- IPSec -->
+    <div class="sub">
+      <div class="stitle">5.2.1 · IPSEC</div>
+      <p><strong>IPSec</strong> implementa la crittografia a livello di rete e fornisce sicurezza al protocollo IP (v4 e v6) e a tutti i protocolli superiori. Supporta due protocolli:</p>
+      <div class="two">
+        <div class="cbox"><div class="cbox-t">AH – Authentication Header</div>Garantisce <strong>autenticazione dell'origine</strong> e integrità dell'intero messaggio. Previene attacchi di spoofing (l'IP sorgente non è stato alterato).</div>
+        <div class="cbox g"><div class="cbox-t">ESP – Encapsulating Security Payload</div>Garantisce <strong>autenticità, integrità e confidenzialità</strong> del solo payload. I dati vengono anche cifrati.</div>
+      </div>
+      <div class="two" style="margin-top:12px">
+        <div class="cbox p">
+          <div class="cbox-t">Transport Mode</div>
+          Sicurezza solo per il <strong>payload</strong> del pacchetto IP. Usato per connessioni client-server tra host con IP pubblico (end-to-end). Non crea un tunnel.
+        </div>
+        <div class="cbox y">
+          <div class="cbox-t">Tunnel Mode</div>
+          Sicurezza per l'<strong>intero pacchetto IP</strong>. Il pacchetto originale è incapsulato in un nuovo pacchetto con gli indirizzi dei gateway. Usato per VPN LAN-to-LAN (gateway-to-gateway).
+        </div>
+      </div>
+      <div class="ib" style="margin-top:12px"><div class="ib-t">📌 Concetti chiave IPSec</div>
+        <ul>
+          <li><strong>SA (Security Association)</strong>: "contratto" che descrive il tipo di connessione sicura tra due dispositivi, incluso algoritmo di cifratura e chiave</li>
+          <li><strong>IKE (Internet Key Exchange)</strong>: protocollo per la generazione dinamica delle chiavi di sessione (porta 500 UDP), basato sull'algoritmo Diffie-Hellman</li>
+          <li><strong>SPD (Security Policy Database)</strong>: politiche per la gestione dei pacchetti (scarta / non applicare / applica sicurezza)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TLS/SSL -->
+    <div class="sub g">
+      <div class="stitle">5.2.2 · TLS/SSL</div>
+      <p><strong>TLS</strong> (Transport Layer Security) e il suo predecessore <strong>SSL</strong> si collocano tra il livello trasporto (TCP) e il livello applicazione, garantendo riservatezza e integrità a tutti i protocolli superiori (HTTP, SMTP, IMAP, VoIP…).</p>
+      <p>Usa la crittografia <strong>asimmetrica per scambiare</strong> una chiave simmetrica di sessione (generata casualmente dal client e cifrata con la chiave pubblica del server). La chiave cambia a ogni sessione.</p>
+      <p><strong>Obiettivi di SSL</strong>:</p>
+      <ul>
+        <li><strong>Riservatezza</strong>: cifratura con algoritmi simmetrici (DES, RC4)</li>
+        <li><strong>Autenticazione</strong>: scambio di certificati tramite crittografia a chiave pubblica (RSA)</li>
+        <li><strong>Integrità</strong>: controllo con funzioni di hash (SHA, MD5)</li>
+      </ul>
+      <p style="margin-top:10px"><strong>Architettura SSL – due strati:</strong></p>
+      <div class="two">
+        <div class="cbox"><div class="cbox-t">SSL Handshake (strato alto)</div>Gestisce la fase iniziale: autenticazione reciproca di client e server, negoziazione algoritmo di cifratura, scambio chiave di sessione.</div>
+        <div class="cbox g"><div class="cbox-t">SSL Record Protocol (strato basso)</div>Trasmissione vera e propria: frammenta i dati, comprime, aggiunge MAC (integrità), cifra con chiave di sessione, aggiunge intestazione SSL, passa a TCP.</div>
+      </div>
+      <div class="ib g" style="margin-top:12px"><div class="ib-t">📌 Fasi dell'SSL Handshake</div>
+        <ol>
+          <li><strong>Avvio</strong>: client invia "client hello" con versione SSL e algoritmi supportati; server risponde con "server hello" e algoritmo scelto</li>
+          <li><strong>Autenticazione server</strong>: server invia il certificato (firmato da CA) con la propria chiave pubblica</li>
+          <li><strong>Scambio chiave di sessione</strong>: client genera la chiave di sessione, la cifra con la chiave pubblica del server, la invia</li>
+          <li><strong>Chiusura handshake</strong>: entrambi confermano la chiave e avviano la trasmissione cifrata con SSL Record Protocol</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 5.3 HTTPS ══════════ -->
+<div class="slabel">◈ 5.3 HTTPS – HTTP sicuro</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum y">5.3</span><span class="ttitle">HTTPS – HTTP SICURO</span></div>
+  <div class="tbody">
+    <p><strong>HTTPS</strong> (HyperText Transfer Protocol over Secure Socket Layer) è la versione sicura di HTTP. I dati trasmessi via HTTP sono crittografati tramite SSL/TLS per scoraggiare intrusioni. Lavora sulla <strong>porta 443</strong> di TCP.</p>
+    <div class="hs-row">
+      <div class="hs-box" style="color:var(--acc)">HTTP</div><div class="hs-arr">+</div>
+      <div class="hs-box" style="color:var(--acc3)">SSL/TLS<br><small style="color:var(--dim)">chiave asimmetrica + simmetrica di sessione</small></div>
+      <div class="hs-arr">=</div>
+      <div class="hs-box" style="color:var(--acc4)">HTTPS<br><small style="color:var(--dim)">protegge dati tra client e server</small></div>
+    </div>
+    <p style="margin-top:10px"><strong>Sessione HTTPS in 3 fasi:</strong></p>
+    <ol>
+      <li><strong>Apertura</strong>: il browser si connette alla porta 443; SSL esegue l'handshake con scambio del certificato; il browser avvia la richiesta HTTP inserita in una busta SSL</li>
+      <li><strong>Mantenimento</strong>: trasferimento dati regolato da HTTP, con trasmissione cifrata da SSL Record Protocol</li>
+      <li><strong>Chiusura</strong>: SSL chiude la connessione sicura</li>
+    </ol>
+    <div class="ib y"><div class="ib-t">📌 Verifica</div>L'icona del <strong>lucchetto</strong> nella barra degli indirizzi indica l'attivazione del protocollo HTTPS. Si può verificare l'apertura della porta 443 con strumenti come PuTTY o Telnet.</div>
+  </div>
+</div>
+
+<!-- ══════════ 5.4 PGP ══════════ -->
+<div class="slabel">◈ 5.4 PGP – Posta elettronica sicura</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum p">5.4</span><span class="ttitle">PGP – PRETTY GOOD PRIVACY</span></div>
+  <div class="tbody">
+    <p><strong>PGP</strong> (ideato da Philip Zimmermann, descritto in RFC 4880) è lo standard per la posta elettronica sicura. Combina crittografia a chiave simmetrica e asimmetrica per garantire: riservatezza, autenticazione del mittente, autenticazione del ricevente, integrità del messaggio.</p>
+
+    <div class="sub">
+      <div class="stitle">INVIO DI UN MESSAGGIO SEGRETO (RISERVATEZZA)</div>
+      <ol>
+        <li>PGP genera una <strong>chiave di sessione</strong> casuale per ogni messaggio</li>
+        <li>Il messaggio è cifrato con la <strong>chiave di sessione</strong> (crittografia simmetrica)</li>
+        <li>La chiave di sessione è cifrata con la <strong>chiave pubblica del destinatario</strong></li>
+        <li>Testo cifrato + chiave di sessione cifrata vengono inviati al destinatario</li>
+        <li>Il destinatario usa la propria <strong>chiave privata</strong> per decifrare la chiave di sessione, poi la usa per decifrare il messaggio</li>
+      </ol>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">AUTENTICAZIONE E INTEGRITÀ (FIRMA DIGITALE PGP)</div>
+      <ol>
+        <li>PGP applica una <strong>funzione di hash</strong> al messaggio → digest</li>
+        <li>Il digest è cifrato con la <strong>chiave privata del mittente</strong> → firma digitale</li>
+        <li>Messaggio in chiaro + firma vengono inviati</li>
+        <li>Il destinatario decifra la firma con la <strong>chiave pubblica del mittente</strong></li>
+        <li>Ricalcola il digest del messaggio e lo confronta: se coincidono, il messaggio è integro e autentico</li>
+      </ol>
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:16px">
+      <table>
+        <thead><tr><th>FUNZIONE</th><th>ALGORITMI USATI DA PGP</th></tr></thead>
+        <tbody>
+          <tr><td>Cifratura messaggio</td><td><span class="tag b">RSA</span> <span class="tag y">3DES</span></td></tr>
+          <tr><td>Scambio chiave di sessione</td><td><span class="tag b">RSA</span> (cifra con chiave pubblica del destinatario)</td></tr>
+          <tr><td>Calcolo digest (hash)</td><td><span class="tag g">MD5</span> <span class="tag g">SHA</span></td></tr>
+          <tr><td>Firma digitale</td><td><span class="tag b">RSA</span> (cifra il digest con chiave privata del mittente)</td></tr>
+          <tr><td>Compressione</td><td><span class="tag p">ZIP</span></td></tr>
+          <tr><td>Gestione chiavi</td><td><span class="tag y">Diffie-Hellman/DSS</span> <span class="tag b">RSA</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ib p"><div class="ib-t">📌 Web of Trust (PGP)</div>A differenza dei sistemi con CA centrali, PGP si basa su una <strong>"ragnatela di fiducia"</strong>: un utente che certifica una firma si fa garante per gli altri. I server di chiavi pubbliche (keyserver) sono accessibili a chiunque e si aggiornano continuamente tra loro.</div>
+  </div>
+</div>
+
+<footer>SICUREZZA DI UN SISTEMA INFORMATICO · UNITÀ 5 – VPN E PROTOCOLLI SICURI</footer>
+</div>
+</body>
+</html>

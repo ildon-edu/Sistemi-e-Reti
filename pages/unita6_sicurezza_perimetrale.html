@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 6 – Sicurezza perimetrale</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #ff6b35;
+    --accent-rgb: 255, 107, 53;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+<header>
+  <div class="hbadge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+  <h1>UNITÀ 6 – <span>SICUREZZA PERIMETRALE</span></h1>
+  <p class="subtitle">// ACL · Firewall · DMZ · Port Forwarding · Wi-Fi · Troubleshooting //</p>
+</header>
+
+<!-- ══════════ 6.1 INTRO ══════════ -->
+<div class="slabel">◈ 6.1 Sicurezza perimetrale</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum">6.1</span><span class="ttitle">SICUREZZA PERIMETRALE</span></div>
+  <div class="tbody">
+    <p>La <strong>sicurezza perimetrale</strong> è l'insieme delle misure atte a proteggere il confine tra la rete interna (trusted) e la rete esterna non fidata (untrusted). Opera principalmente ai livelli 3 e 4 del modello OSI, analizzando le intestazioni dei pacchetti in base a regole predefinite.</p>
+    <div class="four">
+      <div class="cbox b"><div class="cbox-t">ACL</div>Filtro su router: lista di regole per permettere/bloccare il traffico in base a IP e porte</div>
+      <div class="cbox"><div class="cbox-t">Firewall</div>Dispositivo dedicato al filtraggio del traffico tra reti con diversi livelli di affidabilità</div>
+      <div class="cbox y"><div class="cbox-t">DMZ</div>Zona demilitarizzata: area di rete "neutrale" per i server pubblici</div>
+      <div class="cbox g"><div class="cbox-t">IDS/IPS</div>Intrusion Detection/Prevention System: monitoraggio e risposta attiva agli attacchi</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 6.2 ACL ══════════ -->
+<div class="slabel">◈ 6.2 ACL – Access Control List</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum b">6.2</span><span class="ttitle">ACCESS CONTROL LIST (ACL)</span></div>
+  <div class="tbody">
+    <div class="sub">
+      <div class="stitle">6.2.1 · CHE COS'È UNA ACL</div>
+      <p>Una <strong>ACL</strong> è una lista sequenziale di istruzioni (statement) <strong>permit/deny</strong> che permettono o bloccano il traffico di rete in base a criteri come: indirizzo IP sorgente/destinazione, protocollo (TCP/UDP/ICMP), numero di porta. Funziona come un filtro a livello 3 (rete) e 4 (trasporto).</p>
+      <div class="two">
+        <div class="cbox b">
+          <div class="cbox-t">ACL Standard</div>
+          Filtra solo in base all'<strong>indirizzo IP sorgente</strong>. Numeri 1–99 (o 1300–1999). Posizionata il più vicino possibile alla <strong>destinazione</strong>.
+        </div>
+        <div class="cbox g">
+          <div class="cbox-t">ACL Estesa</div>
+          Filtra in base a IP sorgente/destinazione, <strong>protocollo e porta</strong>. Numeri 100–199 (o 2000–2699). Posizionata il più vicino possibile alla <strong>sorgente</strong> per non sprecare banda.
+        </div>
+      </div>
+      <div class="ib b" style="margin-top:12px"><div class="ib-t">⚠ Regola implicita</div>Alla fine di ogni ACL esiste sempre un <strong>"deny any" implicito</strong>: tutto il traffico non esplicitamente permesso viene bloccato. Serve almeno un'istruzione <code>permit</code> per non bloccare tutto.</div>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">6.2.2 · COME FUNZIONA UNA ACL SU UN ROUTER</div>
+      <p>Il router esamina ogni pacchetto e lo confronta <strong>sequenzialmente</strong> con le regole dell'ACL. Alla prima corrispondenza esegue l'azione (permit/deny) e smette di scorrere la lista. Le regole più specifiche vanno messe <strong>prima</strong> di quelle generiche.</p>
+      <p>Ogni ACL deve essere <strong>associata a un'interfaccia</strong> del router e a una direzione:</p>
+      <div class="two">
+        <div class="cbox b"><div class="cbox-t">IN (inbound)</div>Filtro applicato ai pacchetti <strong>in arrivo</strong> sull'interfaccia prima del routing</div>
+        <div class="cbox g"><div class="cbox-t">OUT (outbound)</div>Filtro applicato ai pacchetti <strong>in uscita</strong> dall'interfaccia dopo il routing</div>
+      </div>
+      <div class="code" style="margin-top:14px">
+<span class="cm">! ACL STANDARD – blocca la rete 192.168.1.0/24</span>
+<span class="kw">access-list</span> <span class="val">1</span> deny   192.168.1.0 0.0.0.255
+<span class="kw">access-list</span> <span class="val">1</span> permit any
+
+<span class="cm">! Applicazione all'interfaccia GigabitEthernet0/1 in uscita</span>
+<span class="kw">interface</span> GigabitEthernet0/1
+ <span class="kw">ip access-group</span> <span class="val">1</span> out
+
+<span class="cm">! ACL ESTESA – blocca Telnet (porta 23) da 10.0.0.0 a 192.168.10.0</span>
+<span class="kw">access-list</span> <span class="val">110</span> deny tcp 10.0.0.0 0.0.0.255 192.168.10.0 0.0.0.255 eq <span class="val">23</span>
+<span class="kw">access-list</span> <span class="val">110</span> permit ip any any
+      </div>
+      <div class="ib"><div class="ib-t">📌 Wildcard mask</div>Nelle ACL la netmask è espressa come <strong>wildcard</strong> (inverso della subnet mask): <code>255.255.255.0</code> → wildcard <code>0.0.0.255</code>. Bit 0 = controlla, bit 1 = ignora. <code>0.0.0.0</code> = host esatto; <code>255.255.255.255</code> = qualsiasi indirizzo.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 6.3 FIREWALL ══════════ -->
+<div class="slabel">◈ 6.3 Firewall</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum r">6.3</span><span class="ttitle">FIREWALL</span></div>
+  <div class="tbody">
+    <div class="sub">
+      <div class="stitle">6.3.1 · CHE COS'È UN FIREWALL</div>
+      <p>Un <strong>firewall</strong> è un sistema (hardware o software) che separa una rete fidata (interna) da una non fidata (esterna), analizzando il traffico in base a una <strong>policy di sicurezza</strong>. Può essere un router dedicato, un host con due schede di rete o un apparato specifico.</p>
+      <div class="ib r"><div class="ib-t">⚠ Cosa non fa un firewall</div>Non protegge da attacchi che bypassano il perimetro (es. modem dial-up), da minacce interne alla LAN, da virus trasmessi via e-mail o da attacchi su connessioni permesse dalla policy.</div>
+    </div>
+
+    <div class="sub b">
+      <div class="stitle">6.3.2 · PACKET FILTERING (FILTRAGGIO A LIVELLO 3/4)</div>
+      <p>Il tipo più semplice di firewall. Esamina ogni pacchetto confrontandolo con una lista di regole basate su: indirizzo IP sorgente/destinazione, protocollo TCP/UDP/ICMP, porta sorgente/destinazione, tipo di messaggio ICMP, interfaccia e direzione.</p>
+      <div class="two">
+        <div class="cbox b">
+          <div class="cbox-t">Stateless</div>
+          Ogni pacchetto è esaminato <strong>indipendentemente</strong>. Non mantiene informazioni sulle connessioni in corso. Veloce ma meno sicuro.
+        </div>
+        <div class="cbox g">
+          <div class="cbox-t">Stateful</div>
+          Tiene traccia dello <strong>stato delle connessioni</strong> (SYN, SYN-ACK, ACK…). Permette solo pacchetti di risposta a connessioni iniziate dall'interno. Protegge da molti tipi di attacchi.
+        </div>
+      </div>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">6.3.3 · GATEWAY A LIVELLO APPLICAZIONE – SERVER PROXY</div>
+      <p>Opera al <strong>livello 7</strong> (applicazione). Agisce da intermediario tra client e server: il client si connette al proxy, che verifica la policy e inoltra la richiesta al server esterno. Può analizzare il contenuto HTTP, FTP, DNS, e-mail.</p>
+      <div class="two">
+        <div class="cbox y">
+          <div class="cbox-t">Proxy Forward</div>
+          Installato sul lato <strong>client</strong>. Tutti i client passano per il proxy per accedere a Internet. Permette: caching dei contenuti, filtraggio URL, anonimato, autenticazione degli utenti.
+        </div>
+        <div class="cbox">
+          <div class="cbox-t">Proxy Reverse</div>
+          Installato sul lato <strong>server</strong>. Protegge i server interni nascondendo la loro identità. Offre load balancing, caching e protezione da attacchi diretti.
+        </div>
+      </div>
+    </div>
+
+    <div class="sub y">
+      <div class="stitle">6.3.4 · FIREWALL DI ULTIMA GENERAZIONE – UTM</div>
+      <p>I <strong>Next Generation Firewall (NGFW)</strong> e i sistemi <strong>UTM</strong> (Unified Threat Management) integrano in un unico apparato:</p>
+      <div class="four">
+        <div class="cbox b"><div class="cbox-t">IDS/IPS</div>Intrusion Detection/Prevention System: rileva e blocca attività sospette</div>
+        <div class="cbox r"><div class="cbox-t">Antivirus/Anti-spam</div>Scansione del traffico in tempo reale per malware e messaggi indesiderati</div>
+        <div class="cbox g"><div class="cbox-t">Deep Packet Inspection</div>Analisi del payload dei pacchetti, non solo delle intestazioni</div>
+        <div class="cbox y"><div class="cbox-t">Content Filtering</div>Controllo dei contenuti: URL, applicazioni, protocolli (es. P2P)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 6.4 DMZ ══════════ -->
+<div class="slabel">◈ 6.4 DMZ – Zona Demilitarizzata</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum g">6.4</span><span class="ttitle">DMZ – DEMILITARIZED ZONE</span></div>
+  <div class="tbody">
+    <p>La <strong>DMZ</strong> è una sottorete separata che si trova tra Internet e la LAN interna. Ospita i server che devono essere accessibili dall'esterno (web server, mail server, FTP server, DNS) senza esporre la rete interna.</p>
+    <div class="two">
+      <div class="cbox b">
+        <div class="cbox-t">Architettura a singolo firewall (tre gambe)</div>
+        Un solo firewall con tre interfacce: una verso Internet, una verso la DMZ, una verso la LAN interna. Soluzione economica ma con un singolo punto di fallimento.
+      </div>
+      <div class="cbox g">
+        <div class="cbox-t">Architettura a doppio firewall</div>
+        Due firewall: il primo (outer) filtra il traffico tra Internet e DMZ; il secondo (inner) filtra tra DMZ e LAN interna. Soluzione più sicura: un attaccante deve compromettere entrambi.
+      </div>
+    </div>
+    <div class="ib g" style="margin-top:12px"><div class="ib-t">📌 Policy DMZ</div>
+      <ul>
+        <li>Internet → DMZ: permesso solo sui servizi esposti (porta 80, 443, 25…)</li>
+        <li>Internet → LAN interna: sempre <strong>bloccato</strong></li>
+        <li>LAN interna → DMZ: permesso solo per la gestione dei server</li>
+        <li>DMZ → LAN interna: <strong>bloccato</strong> (se un server DMZ viene compromesso, non deve raggiungere la LAN)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 6.5 PORT FORWARDING ══════════ -->
+<div class="slabel">◈ 6.5 Port Forwarding</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum y">6.5</span><span class="ttitle">PORT FORWARDING</span></div>
+  <div class="tbody">
+    <p>Il <strong>port forwarding</strong> (o port mapping) è una tecnica che consente al router di reindirizzare le connessioni in arrivo su una specifica porta pubblica verso un host e una porta della rete interna. Permette di esporre servizi interni (server web, FTP, videocamere, giochi) su Internet senza DMZ.</p>
+    <div class="sub">
+      <div class="stitle">FUNZIONAMENTO</div>
+      <p>Il router riceve un pacchetto destinato all'IP pubblico sulla <strong>porta specificata</strong> e lo redirige all'IP privato interno sulla porta configurata. La traduzione dell'indirizzo avviene tramite <strong>NAT/PAT</strong>.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>PORTA ESTERNA</th><th>IP INTERNO</th><th>PORTA INTERNA</th><th>SERVIZIO</th></tr></thead>
+          <tbody>
+            <tr><td>80</td><td>192.168.1.10</td><td>80</td><td>Web Server</td></tr>
+            <tr><td>443</td><td>192.168.1.10</td><td>443</td><td>HTTPS</td></tr>
+            <tr><td>2222</td><td>192.168.1.20</td><td>22</td><td>SSH (porta cambiata per sicurezza)</td></tr>
+            <tr><td>21</td><td>192.168.1.30</td><td>21</td><td>FTP Server</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ib y"><div class="ib-t">⚠ Attenzione</div>Il port forwarding espone un servizio interno a Internet. Va usato con cautela, limitandolo alle porte strettamente necessarie e proteggendo i servizi esposti con autenticazione forte e aggiornamenti continui.</div>
+  </div>
+</div>
+
+<!-- ══════════ 6.6 WI-FI ══════════ -->
+<div class="slabel">◈ 6.6 Sicurezza nelle reti Wi-Fi</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum p">6.6</span><span class="ttitle">SICUREZZA NELLE RETI WI-FI</span></div>
+  <div class="tbody">
+    <p>Le reti wireless sono intrinsecamente meno sicure di quelle cablate: il segnale radio si propaga oltre i confini fisici dell'edificio e chiunque nel raggio d'azione può tentare l'accesso. La crittografia è l'unico strumento efficace di protezione.</p>
+
+    <div class="sub r">
+      <div class="stitle">6.6.1 · WEP – WIRED EQUIVALENT PRIVACY</div>
+      <p>Primo standard di sicurezza Wi-Fi (1999). Usa l'algoritmo <strong>RC4</strong> con chiave a 64 o 128 bit. Considerato <strong>completamente insicuro</strong>: il vettore di inizializzazione (IV) a soli 24 bit viene riusato troppo frequentemente, rendendo l'intercettazione e la decrittazione facili con strumenti come Aircrack-ng in pochi minuti.</p>
+    </div>
+
+    <div class="sub y">
+      <div class="stitle">6.6.2 · WPA2 – WI-FI PROTECTED ACCESS 2</div>
+      <p>Standard dal 2004 (IEEE 802.11i). Sostituisce completamente WEP. Usa il protocollo <strong>CCMP</strong> basato su <strong>AES-128</strong> per la cifratura e <strong>TKIP</strong> per la gestione delle chiavi. La chiave cambia per ogni pacchetto.</p>
+      <div class="two">
+        <div class="cbox y">
+          <div class="cbox-t">WPA2-Personal (PSK)</div>
+          Usa una <strong>passphrase condivisa</strong> (Pre-Shared Key). Adatto a reti domestiche e piccole aziende. Vulnerabile ad attacchi dizionario se la password è debole.
+        </div>
+        <div class="cbox b">
+          <div class="cbox-t">WPA2-Enterprise</div>
+          Usa un <strong>server RADIUS</strong> per l'autenticazione degli utenti (protocollo 802.1X). Ogni utente ha credenziali individuali. Adatto ad ambienti aziendali.
+        </div>
+      </div>
+      <div class="ib r" style="margin-top:12px"><div class="ib-t">⚠ Vulnerabilità KRACK (2017)</div>Key Reinstallation Attack: sfrutta una debolezza nel processo di handshake WPA2 a 4 vie, permettendo la reinstallazione di una chiave già usata. Richiede la vicinanza fisica all'AP. Mitigato con patch software.</div>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">6.6.3 · WPA3 – WI-FI PROTECTED ACCESS 3</div>
+      <p>Standard del 2018. Risolve le vulnerabilità di WPA2 introducendo:</p>
+      <ul>
+        <li><strong>SAE</strong> (Simultaneous Authentication of Equals): sostituisce l'handshake PSK, resistente agli attacchi offline a dizionario anche con password deboli</li>
+        <li><strong>Forward Secrecy</strong>: anche se la password viene scoperta in futuro, le sessioni precedenti rimangono cifrate</li>
+        <li><strong>AES-256-GCMP</strong> per la cifratura (WPA3-Enterprise)</li>
+        <li><strong>Enhanced Open</strong>: cifratura opportunistica sulle reti aperte (senza password)</li>
+      </ul>
+    </div>
+
+    <div class="sub b">
+      <div class="stitle">6.6.4 · CONSIGLI PER LA SICUREZZA WI-FI</div>
+      <ul>
+        <li>Usare sempre <strong>WPA2 o WPA3</strong>; non usare mai WEP</li>
+        <li>Scegliere una <strong>passphrase lunga e complessa</strong> (almeno 20 caratteri)</li>
+        <li>Cambiare le <strong>credenziali di accesso al router</strong> (non lasciare admin/admin)</li>
+        <li>Aggiornare regolarmente il <strong>firmware del router</strong></li>
+        <li>Disabilitare il <strong>WPS</strong> (Wi-Fi Protected Setup): vulnerabile ad attacchi brute force sul PIN a 8 cifre</li>
+        <li>Usare una <strong>rete guest separata</strong> per i dispositivi IoT e ospiti</li>
+        <li>Disabilitare la <strong>gestione remota</strong> del router se non necessaria</li>
+        <li>Verificare periodicamente i <strong>dispositivi connessi</strong> alla rete</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 6.7 TROUBLESHOOTING ══════════ -->
+<div class="slabel">◈ 6.7 Troubleshooting per la sicurezza</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum b">6.7</span><span class="ttitle">TROUBLESHOOTING PER LA SICUREZZA</span></div>
+  <div class="tbody">
+    <p>Il <strong>troubleshooting</strong> è il processo strutturato per identificare, localizzare e risolvere un problema di rete o sicurezza. Segue un approccio metodico a livelli OSI.</p>
+    <div class="sub">
+      <div class="stitle">APPROCCI AL TROUBLESHOOTING</div>
+      <div class="three">
+        <div class="cbox b"><div class="cbox-t">Bottom-Up</div>Si parte dal <strong>livello fisico</strong> (cavi, connessioni) e si sale fino al livello applicazione. Utile quando si sospetta un problema hardware.</div>
+        <div class="cbox g"><div class="cbox-t">Top-Down</div>Si parte dal <strong>livello applicazione</strong> e si scende verso il fisico. Utile quando l'utente riporta un problema su un'applicazione specifica.</div>
+        <div class="cbox y"><div class="cbox-t">Divide and Conquer</div>Si parte da un livello intermedio (solitamente il livello 3) e si espande in entrambe le direzioni in base ai risultati. Approccio più efficiente per professionisti esperti.</div>
+      </div>
+    </div>
+    <div class="sub g">
+      <div class="stitle">STRUMENTI DI DIAGNOSTICA</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>STRUMENTO</th><th>FUNZIONE</th><th>LIVELLO OSI</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag b">ping</span></td><td>Verifica la raggiungibilità di un host (ICMP echo request/reply)</td><td>3 – Rete</td></tr>
+            <tr><td><span class="tag b">traceroute / tracert</span></td><td>Mostra il percorso dei pacchetti e i tempi di risposta di ogni hop</td><td>3 – Rete</td></tr>
+            <tr><td><span class="tag g">netstat</span></td><td>Mostra le connessioni TCP/UDP attive, le porte in ascolto e le statistiche di rete</td><td>4 – Trasporto</td></tr>
+            <tr><td><span class="tag g">nslookup / dig</span></td><td>Interroga i server DNS per risolvere nomi di dominio e verificare i record</td><td>7 – Applicazione</td></tr>
+            <tr><td><span class="tag y">ipconfig / ifconfig</span></td><td>Mostra la configurazione delle interfacce di rete (IP, mask, gateway, DNS)</td><td>3 – Rete</td></tr>
+            <tr><td><span class="tag o">Wireshark</span></td><td>Cattura e analizza il traffico di rete a livello di singolo pacchetto</td><td>Tutti</td></tr>
+            <tr><td><span class="tag o">Nmap</span></td><td>Scansione host e porte per verificare i servizi esposti</td><td>3/4 – Rete/Trasporto</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 6.8 TROUBLE TICKETING ══════════ -->
+<div class="slabel">◈ 6.8 Il trouble ticketing</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum g">6.8</span><span class="ttitle">IL TROUBLE TICKETING</span></div>
+  <div class="tbody">
+    <p>Il <strong>trouble ticketing</strong> (o help desk ticketing) è un sistema per la gestione strutturata degli incidenti informatici e delle richieste di supporto. Garantisce tracciabilità, priorità e tempi di risposta definiti.</p>
+    <div class="sub">
+      <div class="stitle">CICLO DI VITA DI UN TICKET</div>
+      <ol>
+        <li><strong>Apertura</strong>: l'utente o il sistema segnala un problema → creazione del ticket con ID univoco, data, descrizione, priorità e utente assegnato</li>
+        <li><strong>Classificazione e priorità</strong>: il problema viene categorizzato (hardware, software, rete, sicurezza) e si assegna la priorità (critica, alta, media, bassa) in base all'impatto</li>
+        <li><strong>Assegnazione</strong>: il ticket viene inoltrato al team o tecnico competente (escalation se necessario)</li>
+        <li><strong>Risoluzione</strong>: il tecnico interviene, documenta la causa e la soluzione adottata</li>
+        <li><strong>Chiusura</strong>: il ticket viene chiuso con la soluzione documentata; l'utente conferma la risoluzione</li>
+      </ol>
+    </div>
+    <div class="sub g">
+      <div class="stitle">SLA – SERVICE LEVEL AGREEMENT</div>
+      <p>Il contratto SLA definisce i livelli di servizio garantiti, inclusi i tempi massimi di risposta e risoluzione per ogni priorità:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>PRIORITÀ</th><th>DESCRIZIONE</th><th>TEMPO DI RISPOSTA</th><th>TEMPO DI RISOLUZIONE</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag r">CRITICA</span></td><td>Servizio completamente non disponibile, impatto su tutti gli utenti</td><td>15 minuti</td><td>4 ore</td></tr>
+            <tr><td><span class="tag o">ALTA</span></td><td>Servizio degradato, impatto significativo sull'operatività</td><td>1 ora</td><td>8 ore</td></tr>
+            <tr><td><span class="tag y">MEDIA</span></td><td>Problema parziale, workaround disponibile</td><td>4 ore</td><td>24 ore</td></tr>
+            <tr><td><span class="tag g">BASSA</span></td><td>Richiesta di modifica o miglioramento non urgente</td><td>8 ore</td><td>72 ore</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ib g"><div class="ib-t">📌 Sistemi di ticketing comuni</div><strong>Jira Service Management, Zendesk, ServiceNow, Freshdesk, osTicket</strong>. Permettono: creazione automatica da e-mail, dashboard in tempo reale, reportistica sugli SLA, knowledge base integrata e integrazione con sistemi di monitoraggio (Nagios, Zabbix).</div>
+  </div>
+</div>
+
+<footer>SICUREZZA DI UN SISTEMA INFORMATICO · UNITÀ 6 – SICUREZZA PERIMETRALE</footer>
+</div>
+</body>
+</html>

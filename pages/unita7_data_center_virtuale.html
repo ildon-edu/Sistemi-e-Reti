@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 7 – Dal Data Center Fisico a Quello Virtuale</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #ffd166;
+    --accent-rgb: 255, 209, 102;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+  <header>
+    <div class="header-badge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+    <h1>UNITÀ 7 – <span>DAL DATA CENTER FISICO A QUELLO VIRTUALE</span></h1>
+    <p class="subtitle">// Infrastrutture, virtualizzazione, storage e networking virtuale //</p>
+  </header>
+
+  <!-- 7.1 -->
+  <div class="section-label">◈ 7.1 Il Data Center</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num">7.1</span>
+      <span class="topic-title">CHE COS'È UN DATA CENTER</span>
+    </div>
+    <div class="topic-body">
+      <p>Un <strong>data center</strong> (o CED – Centro Elaborazione Dati) è lo spazio fisico che ospita le infrastrutture tecnologiche di un'azienda per l'elaborazione, la memorizzazione e la condivisione delle informazioni.</p>
+      <p>Fisicamente fornisce: spazio per rack, energia, raffreddamento, sicurezza fisica, connessioni Internet e servizi di sicurezza logica.</p>
+
+      <div class="subtopic">
+        <div class="subtopic-title">TIPOLOGIE DI DATA CENTER</div>
+        <ul>
+          <li><strong>Aziendali (CED):</strong> di proprietà di una singola azienda; gestiscono dati interni, flussi amministrativi, Intranet/Extranet.</li>
+          <li><strong>Offerti da terzi (housing, hosting, cloud):</strong> strutture specializzate multipiattaforma; erogano applicazioni Web, email, server virtuali privati.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">7.1.1</span>
+      <span class="topic-title">COME È FATTO UN DATA CENTER</span>
+    </div>
+    <div class="topic-body">
+      <p>Il data center garantisce elaborazione e storage 24/7 grazie a sistemi ridondanti. Si compone di tre aree principali:</p>
+      <ul>
+        <li><strong>Infrastruttura operativa (white space):</strong> rack con server, storage, apparati di rete, sistemi di sicurezza di alto livello.</li>
+        <li><strong>Infrastrutture di supporto:</strong> UPS, climatizzazione (CRAC), antincendio, distribuzione energia ridondante, connettività multi-operatore, switch e router.</li>
+        <li><strong>Personale operativo:</strong> amministratori di rete, sistemisti, programmatori, addetti alla sicurezza.</li>
+      </ul>
+
+      <div class="tbl-wrap" style="margin-top:16px;">
+        <table>
+          <thead>
+            <tr><th>AREA</th><th>COMPONENTI PRINCIPALI</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Struttura</td><td>Edificio cablato, sala macchine, centro operativo, centro security</td></tr>
+            <tr><td>Infrastruttura</td><td>CRAC, UPS, rack, sorveglianza, controllo ambiente, reti</td></tr>
+            <tr><td>Apparati</td><td>Elaboratori, storage, router, switch, firewall</td></tr>
+            <tr><td>Intelligenza</td><td>Sistemi di virtualizzazione, monitoraggio, sicurezza, software</td></tr>
+            <tr><td>Personale</td><td>Sorveglianza, network, security, gestione, cablaggi</td></tr>
+            <tr><td>Standard</td><td>TIA-942 con 4 livelli TIER di affidabilità</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="infobox yellow" style="margin-top:14px;">
+        <div class="infobox-title">⚑ Standard TIER</div>
+        I 4 livelli di affidabilità:<br>
+        <strong>Tier I</strong> – 99,67% (fermo 28,8 h/anno) · <strong>Tier II</strong> – 99,75% (22 h) · <strong>Tier III</strong> – 99,98% (1,6 h) · <strong>Tier IV</strong> – 99,99% (0,8 h, fault tolerance completa).
+      </div>
+
+      <div class="subtopic" style="margin-top:16px;">
+        <div class="subtopic-title">SICUREZZA FISICA E LOGICA</div>
+        <ul>
+          <li><strong>Disponibilità dei dati:</strong> protezione da sovratensioni, alluvioni, incendi, terremoti, errori umani; controllo accessi rigoroso.</li>
+          <li><strong>Protezione delle informazioni:</strong> firewall, IDS (Intrusion Detection System); conformità alle normative sulla privacy.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">7.1.2</span>
+      <span class="topic-title">L'EVOLUZIONE DEI DATA CENTER: DAL POSSESSO AL SERVIZIO</span>
+    </div>
+    <div class="topic-body">
+      <p>L'evoluzione si è articolata in tre fasi progressive:</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>FASE</th><th>CARATTERISTICHE</th><th>GESTIONE</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>CED aziendale</strong></td><td>Hardware fisico in sede; spazi e apparati propri</td><td>Configurato e gestito dall'utente</td></tr>
+            <tr><td><strong>Data center virtuale</strong> (collocation)</td><td>Server esternalizzati; virtualizzazione di elaboratori, dischi, rete</td><td>Configurato dall'utente, mantenuto dal provider</td></tr>
+            <tr><td><strong>Cloud – Serverless</strong></td><td>Nessun legame con l'hardware; risorse on-demand come servizi software</td><td>Gestione automatizzata dal provider (FaaS)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">7.1.3</span>
+      <span class="topic-title">INCIDENTI E INTERRUZIONI DELLE ATTIVITÀ</span>
+    </div>
+    <div class="topic-body">
+      <p>Concentrare servizi su un'unica struttura introduce il rischio di <strong>Single Point of Failure (SPoF)</strong>: un guasto può causare la paralisi completa dei sistemi (<em>downtime</em>). Lo standard <strong>ISO 22301</strong> definisce il Business Continuity Plan.</p>
+
+      <div class="two-col" style="margin-top:14px;">
+        <div class="col-box">
+          <div class="col-box-title">⊕ Fault Tolerance</div>
+          <p style="font-size:13px;">«Prevenire le perdite di dati» — Sistemi duplicati (RAID, server ridondanti) che rilevano guasti hardware e spostano il servizio sui sistemi paralleli senza interruzione.</p>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">⊕ Disaster Recovery</div>
+          <p style="font-size:13px;">«Non perdere i dati!» — Processo di recupero e ripristino da un sito secondario in caso di disastro. Il fattore chiave è il <strong>tempo di ripristino</strong>.</p>
+        </div>
+      </div>
+      <div class="infobox cyan" style="margin-top:12px;">
+        <div class="infobox-title">⊕ Business Continuity — «Zero Downtime»</div>
+        Garantisce continuità operativa anche durante un evento avverso, impegnando risorse hardware e software ridondanti. Il data center deve essere duplicato in siti geograficamente distinti (max 50 km). È più forte del disaster recovery perché i sistemi devono funzionare <em>durante</em> il disastro.
+      </div>
+    </div>
+  </div>
+
+  <!-- 7.2 -->
+  <div class="section-label">◈ 7.2 L'Astrazione Logica dell'Hardware</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.1</span>
+      <span class="topic-title">PERCHÉ VIRTUALIZZARE</span>
+    </div>
+    <div class="topic-body">
+      <p>La <strong>virtualizzazione</strong> è una tecnologia software che permette di condividere le risorse di un computer eseguendo simultaneamente più sistemi operativi e applicazioni sulla stessa macchina fisica.</p>
+      <p>È un'<em>astrazione dell'hardware</em>: le risorse fisiche vengono suddivise e rese disponibili come ambienti virtuali indipendenti.</p>
+
+      <div class="two-col" style="margin-top:12px;">
+        <div class="col-box">
+          <div class="col-box-title">VANTAGGI</div>
+          <ul>
+            <li>Riduzione del numero di server fisici</li>
+            <li>Riduzione dello spazio fisico</li>
+            <li>Diminuzione dei consumi energetici</li>
+            <li>Abbattimento dei costi di manutenzione</li>
+          </ul>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">REQUISITI</div>
+          <ul>
+            <li>Partizionamento dell'hardware</li>
+            <li>Mantenimento delle priorità di esecuzione</li>
+            <li>Replica dell'ambiente di astrazione hardware</li>
+            <li>Gestione condivisa delle periferiche (hypervisor)</li>
+            <li>Isolamento e sicurezza tra VM</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title">CARATTERISTICHE DI UNA MACCHINA VIRTUALE</div>
+        <ul>
+          <li>Identica a una macchina fisica ma i componenti (CPU, RAM, disco, NIC) sono <strong>virtuali</strong>.</li>
+          <li>Indipendente dall'hardware fisico: può essere spostata come un file.</li>
+          <li>Compatibile con i sistemi operativi standard.</li>
+          <li>Totalmente isolata dalle altre VM sulla stessa macchina fisica.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.2</span>
+      <span class="topic-title">LAYER FISICO E LAYER VIRTUALE</span>
+    </div>
+    <div class="topic-body">
+      <p>In un <strong>ambiente tradizionale</strong> lo stack è: Hardware → BIOS → Kernel del SO → Driver → Shell → Applicazioni.</p>
+      <p>In un <strong>ambiente virtualizzato</strong> il SO gestisce le risorse fisiche e crea gli ambienti per le nuove macchine, ognuna dotata di proprio hardware virtuale, BIOS e SO guest.</p>
+      <div class="infobox yellow">
+        <div class="infobox-title">⚙ Supporto CPU alla virtualizzazione</div>
+        I processori moderni (Intel VT-D, AMD-V) integrano funzioni native per la virtualizzazione, attivabili dal BIOS. L'impostazione di isolamento della RAM è fondamentale per la sicurezza delle VM.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.3</span>
+      <span class="topic-title">ARCHITETTURE DELLE MACCHINE VIRTUALI — HYPERVISOR</span>
+    </div>
+    <div class="topic-body">
+      <p>Il <strong>Virtual Machine Monitor (Hypervisor)</strong> è il software di basso livello che consente ai sistemi operativi guest di girare in contemporanea su un singolo host, allocando risorse di memoria e I/O in tempo reale.</p>
+
+      <div class="two-col" style="margin-top:12px;">
+        <div class="col-box">
+          <div class="col-box-title">TYPE 1 — Bare Metal / Native</div>
+          <ul>
+            <li>Si integra direttamente col kernel del SO e l'hardware.</li>
+            <li>Massima efficienza, velocità e stabilità.</li>
+            <li>Nessun SO preesistente sulla macchina.</li>
+            <li>Usato per la virtualizzazione di server enterprise e VDI (Virtual Desktop Infrastructure).</li>
+          </ul>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">TYPE 2 — Hosted</div>
+          <ul>
+            <li>Si appoggia su un SO host già presente.</li>
+            <li>Funziona come applicazione utente.</li>
+            <li>Meno efficiente ma facile da installare, spesso gratuito.</li>
+            <li>Esempi: VMware Workstation, VirtualBox, Microsoft Hyper-V.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="infobox cyan" style="margin-top:14px;">
+        <div class="infobox-title">ℹ Virtual Desktop Infrastructure (VDI)</div>
+        Con il Type 1, i sistemi operativi desktop sono ospitati in VM su un server centralizzato. Gli utenti accedono remotamente tramite PC, tablet o thin client. Utile in ambienti aziendali con molte sedi.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.4 – 7.2.5</span>
+      <span class="topic-title">CREAZIONE E AMMINISTRAZIONE DELL'AMBIENTE VIRTUALE</span>
+    </div>
+    <div class="topic-body">
+      <p>Gli ambienti <strong>Type 1 (Bare Metal)</strong> hanno l'hypervisor interfacciato direttamente con l'hardware per gestire in esclusiva i driver fisici. Il SO installato è <strong>minimale</strong> (solo kernel) e interagisce direttamente con l'hypervisor.</p>
+      <p>L'amministrazione completa avviene tramite un <strong>client remoto</strong> o un'<strong>applicazione Web</strong>; in locale si configurano solo parametri di rete, data/ora e password.</p>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.6</span>
+      <span class="topic-title">LA GESTIONE DELLO STORAGE</span>
+    </div>
+    <div class="topic-body">
+      <p>In un ambiente virtualizzato lo storage presenta diversi livelli di astrazione che nascondono la complessità fisica. I dischi virtuali di ogni VM corrispondono a <strong>file</strong> sul sistema fisico, spostabili "a caldo".</p>
+
+      <div class="subtopic">
+        <div class="subtopic-title">STORAGE INTERNO — DAS (Direct Attached Storage)</div>
+        <p style="font-size:14px;">Dischi fissi connessi direttamente al server. Visibili solo internamente; difficile condivisione tra più host.</p>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title green">STORAGE ESTERNO — SAN (Storage Area Network)</div>
+        <p style="font-size:14px;">Insieme di dischi fissi configurati come un unico grande disco logico, collegati in rete dedicata (Fibre Channel, fino a 16–100 Gbit/s). Scalabile fino a diversi petabyte.</p>
+        <ul>
+          <li>Gestione e backup centralizzati</li>
+          <li>Alta velocità e affidabilità</li>
+          <li>Separazione delle risorse di storage da quelle dei server in LAN</li>
+        </ul>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title">NAS (Network Attached Storage)</div>
+        <p style="font-size:14px;">Dispositivo che espone un'unità disco sulla rete, permettendo la condivisione tra utenti con file system dedicati.</p>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title orange">GESTIONE RIDONDANZE — RAID</div>
+        <p style="font-size:14px;">Tecnica per raggruppare dischi in un volume logico con tolleranza ai guasti:</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>TIPO</th><th>MECCANISMO</th><th>NOTA</th></tr></thead>
+            <tbody>
+              <tr><td><strong>RAID 1</strong> (Mirroring)</td><td>2 dischi identici — copia esatta dell'altro</td><td>50% dello spazio utile; massima sicurezza e performance</td></tr>
+              <tr><td><strong>RAID 5</strong> (Parità distribuita)</td><td>≥3 dischi — dati su 2, parità sul 3°</td><td>Meno spreco di RAID 1; scrittura più lenta (calcolo parità)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.7</span>
+      <span class="topic-title">IL VIRTUAL NETWORKING</span>
+    </div>
+    <div class="topic-body">
+      <p>La <strong>rete virtuale</strong> è un insieme di macchine virtuali collegate logicamente tra loro, realizzata tramite software che emula i dispositivi fisici: schede di rete virtuali (vNIC), switch virtuali, router virtuali.</p>
+      <ul>
+        <li>Lo <strong>switch virtuale</strong> rileva le VM collegate alle sue porte virtuali e indirizza il traffico (livello 2 OSI); supporta VLAN multiple (IEEE 802.1q).</li>
+        <li>Il protocollo <strong>LACP (IEEE 802.3ad)</strong> aggrega più NIC fisiche in un'unica logica per maggiori prestazioni e ridondanza.</li>
+        <li>Le <strong>uplink port</strong> collegano la rete virtuale a quella fisica esterna.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.8 – 7.2.9</span>
+      <span class="topic-title">DRIVER E CONFIGURAZIONE DELL'HARDWARE VIRTUALE</span>
+    </div>
+    <div class="topic-body">
+      <p>I produttori di sistemi di virtualizzazione forniscono pacchetti di <strong>driver</strong> per i SO guest (Windows, distribuzioni Linux) per il corretto riconoscimento delle periferiche virtuali e l'ottimizzazione delle prestazioni.</p>
+      <p>Ogni risorsa allocata a una VM deve avere una corrispondente risorsa fisica disponibile. Regola pratica: usare come limite di utilizzo i <strong>⅔ delle risorse fisiche</strong> (disco e RAM).</p>
+      <div class="infobox orange">
+        <div class="infobox-title">⚠ Attenzione alla configurazione</div>
+        Un eccesso di risorse esaurisce l'host con effetto domino su tutte le VM. Un difetto (es. RAM insufficiente) forza l'uso continuo della swap su disco, degradando le prestazioni dell'intero host.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.10</span>
+      <span class="topic-title">GESTIONE DI UN CLUSTER DI HOST</span>
+    </div>
+    <div class="topic-body">
+      <p>Un <strong>cluster di failover</strong> è un gruppo di nodi (server) che lavorano insieme per mantenere al massimo la disponibilità di dati e servizi. In caso di guasto di un host fisico, il gestore del virtual data center sposta le VM sugli altri host.</p>
+      <ul>
+        <li>Gli host del cluster comunicano tramite una rete privata (<strong>heartbeat network</strong>) non accessibile dall'esterno.</li>
+        <li>La gestione dei cluster è integrata nell'hypervisor nei sistemi moderni.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.11</span>
+      <span class="topic-title">LE FUNZIONI DI MIGRAZIONE</span>
+    </div>
+    <div class="topic-body">
+      <div class="two-col">
+        <div class="col-box">
+          <div class="col-box-title">MIGRAZIONE DI VM (Live Migration)</div>
+          <p style="font-size:13px;">Sposta una VM in esecuzione da un host fisico a un altro senza interruzioni. Il downtime è dell'ordine di pochi secondi. La VM originaria viene sospesa solo dopo aver copiato interamente memoria e stato sull'host di destinazione.</p>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">MIGRAZIONE DELLO STORAGE</div>
+          <p style="font-size:13px;">Sposta i file di una VM da uno storage a un altro senza interruzioni (live). Utile per manutenzione RAID, aggiornamento hardware o ottimizzazione dei carichi. Usa il <strong>Mirror Driver</strong> per la sincronizzazione.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.12</span>
+      <span class="topic-title">SNAPSHOT</span>
+    </div>
+    <div class="topic-body">
+      <p>Uno <strong>snapshot</strong> cattura lo stato completo di una VM in un dato momento. Serve come punto di ripristino prima di modifiche critiche o aggiornamenti rischiosi.</p>
+      <ul>
+        <li>Non è un backup: il ripristino comporta la perdita dei dati successivi all'attivazione.</li>
+        <li>Durante lo snapshot si creano file paralleli (<em>transazionali</em>) al posto di scrivere direttamente sulla VM.</li>
+        <li>Usare solo quando necessario e per tempi limitati: uno snapshot prolungato occupa spazio su disco e può saturare lo storage.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.13</span>
+      <span class="topic-title">CLONAZIONE E TEMPLATE</span>
+    </div>
+    <div class="topic-body">
+      <ul>
+        <li><strong>Clonazione:</strong> duplica una VM ottenendone un'altra con la stessa configurazione. La copia deve essere personalizzata (nome, rete) prima dell'accensione per evitare conflitti.</li>
+        <li><strong>Template:</strong> modello derivato da una VM esistente, usato per il deploy rapido di macchine simili con parametri personalizzabili (nome, rete, ecc.).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.14</span>
+      <span class="topic-title">BACKUP E REPLICHE DEL DATA CENTER VIRTUALE</span>
+    </div>
+    <div class="topic-body">
+      <p>Negli ambienti virtuali il backup può includere l'intero stato del server (dati + SO) in un unico file, ripristinabile su un sistema remoto. I gestori di backup possono:</p>
+      <ul>
+        <li>Copiare le intere VM su storage SAN/NAS.</li>
+        <li>Ripristinare integralmente o selettivamente (file e cartelle).</li>
+        <li>Replicare in remoto l'intero ambiente virtuale per un <strong>disaster recovery online</strong> attivabile immediatamente in caso di crash del data center principale.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">7.2.15</span>
+      <span class="topic-title">L'EVOLUZIONE DEI SERVIZI DI VIRTUALIZZAZIONE</span>
+    </div>
+    <div class="topic-body">
+      <p>I servizi di virtualizzazione sono organizzati in una <strong>piramide</strong> di livelli crescenti di astrazione, dalla macchina fisica alle applicazioni utente:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>LIVELLO</th><th>SERVIZIO</th><th>DESCRIZIONE</th></tr></thead>
+          <tbody>
+            <tr><td>Base</td><td><span class="tag cyan">Physical Machines</span></td><td>Hardware fisico dei server</td></tr>
+            <tr><td>1</td><td><span class="tag cyan">Hypervisor</span></td><td>Software di virtualizzazione (Type 1 o 2)</td></tr>
+            <tr><td>2</td><td><span class="tag green">Virtual Storage</span></td><td>SAN virtualizzate (es. VMware VSAN); dischi locali condivisi tra host, con SSD per le prestazioni</td></tr>
+            <tr><td>3</td><td><span class="tag green">Virtual Machine</span></td><td>Macchine virtuali con SO guest indipendenti</td></tr>
+            <tr><td>4</td><td><span class="tag yellow">VCenter Manager</span></td><td>Supervisione, scalabilità, automazione dell'intero ambiente (es. VMware vCenter). Funzionalità: visibilità, scalabilità, automazione.</td></tr>
+            <tr><td>5</td><td><span class="tag yellow">Virtual Desktop Infrastructure</span></td><td>Desktop virtualizzati su server centralizzato; accesso remoto da qualsiasi dispositivo</td></tr>
+            <tr><td>Top</td><td><span class="tag orange">Virtual Applications</span></td><td>App distribuite come oggetti indipendenti, senza installazione tradizionale (es. VMware ThinApp, Microsoft App-V)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>◈ UNITÀ 7 · DAL DATA CENTER FISICO A QUELLO VIRTUALE ◈ · Sistemi &amp; Reti</footer>
+</div>
+</body>
+</html>

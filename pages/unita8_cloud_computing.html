@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 8 – Il Cloud Computing</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #a8ff3e;
+    --accent-rgb: 168, 255, 62;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+  <header>
+    <div class="header-badge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+    <h1>UNITÀ 8 – <span>IL CLOUD COMPUTING</span></h1>
+    <p class="subtitle">// Modelli di servizio, distribuzione, microservizi e container //</p>
+  </header>
+
+  <!-- 8.1 -->
+  <div class="section-label">◈ 8.1 I modelli del Cloud Computing</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num">8.1</span>
+      <span class="topic-title">DEFINIZIONE E CARATTERISTICHE DEL CLOUD COMPUTING</span>
+    </div>
+    <div class="topic-body">
+      <p>Il <strong>cloud computing</strong> è la tecnologia che permette di archiviare, elaborare e usare applicazioni e risorse software messe a disposizione da un fornitore di servizi via Internet. È la conseguenza dell'evoluzione dei data center virtualizzati e delle tecnologie Web.</p>
+
+      <p>Il <strong>NIST</strong> (National Institute of Standards and Technology) ha definito il cloud computing in 5 caratteristiche fondamentali (<em>attributi dei servizi</em>):</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>ATTRIBUTO</th><th>DESCRIZIONE</th></tr></thead>
+          <tbody>
+            <tr><td><strong>On demand self-service</strong></td><td>L'utente accede autonomamente alle risorse senza intervento umano del provider.</td></tr>
+            <tr><td><strong>Broad network access</strong></td><td>Funzionalità disponibili ovunque via rete, da dispositivi eterogenei (mobile, desktop).</td></tr>
+            <tr><td><strong>Resource pooling</strong></td><td>Risorse fisiche e logiche organizzate in pool condivisi, assegnate dinamicamente.</td></tr>
+            <tr><td><strong>Rapid elasticity</strong></td><td>Risorse assegnate/rilasciate elasticamente; l'utente percepisce capacità illimitata.</td></tr>
+            <tr><td><strong>Measured service</strong></td><td>Ogni servizio è misurabile e fatturato in base all'uso effettivo.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:12px;">Il NIST identifica anche: <strong>Modello dei servizi</strong> (SaaS, PaaS, IaaS), <strong>Modello di distribuzione</strong> (pubblico, privato, ibrido, comunitario), <strong>Risorse</strong> (elaborazione, storage, reti, applicazioni), <strong>Organizzazione dell'infrastruttura</strong> (architettura distribuita, virtualizzazione).</p>
+    </div>
+  </div>
+
+  <!-- 8.2 -->
+  <div class="section-label">◈ 8.2 Il modello dei servizi</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">8.2.1</span>
+      <span class="topic-title">SaaS · PaaS · IaaS</span>
+    </div>
+    <div class="topic-body">
+      <p>I servizi cloud sono aggregati in tre classi. Ogni modello implica un diverso livello di gestione tra cliente e provider.</p>
+
+      <div class="three-col" style="margin-top:14px;">
+        <div class="col-box">
+          <div class="col-box-title">IaaS — Infrastructure as a Service</div>
+          <ul>
+            <li>Fornisce l'intera infrastruttura: VM, storage, rete.</li>
+            <li>Il cliente gestisce SO, middleware e applicazioni.</li>
+            <li>Massima flessibilità; richiede competenze sistemistiche.</li>
+            <li><em>Esempi: Amazon EC2, Microsoft Azure, Google Cloud, IBM Cloud, OpenStack.</em></li>
+          </ul>
+        </div>
+        <div class="col-box c2">
+          <div class="col-box-title">PaaS — Platform as a Service</div>
+          <ul>
+            <li>Fornisce una piattaforma completa: SO, linguaggi, database, API.</li>
+            <li>Il cliente si concentra sullo sviluppo delle applicazioni.</li>
+            <li>Nessuna gestione dell'infrastruttura hardware/software.</li>
+            <li><em>Esempi: Google App Engine, Azure App Service, IBM Cloud (PaaS), OpenStack.</em></li>
+          </ul>
+        </div>
+        <div class="col-box c3">
+          <div class="col-box-title">SaaS — Software as a Service</div>
+          <ul>
+            <li>Applicazioni pronte all'uso via browser.</li>
+            <li>Sicurezza e infrastruttura a carico del provider.</li>
+            <li>L'utente può solo configurare l'applicazione.</li>
+            <li><em>Esempi: Google Drive, Dropbox, Box.net.</em></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:16px;">
+        <table>
+          <thead><tr><th>COMPONENTE</th><th>IaaS</th><th>PaaS</th><th>SaaS</th></tr></thead>
+          <tbody>
+            <tr><td>Applicazioni / Dati</td><td>Gestito dall'utente</td><td>Gestito dall'utente</td><td>Gestito dal provider</td></tr>
+            <tr><td>Sistema Operativo / Container</td><td>Gestito dall'utente</td><td>Gestito dal provider</td><td>Gestito dal provider</td></tr>
+            <tr><td>Virtualizzazione / Server / Archivio / Rete</td><td>Gestito dal provider</td><td>Gestito dal provider</td><td>Gestito dal provider</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">8.2.2</span>
+      <span class="topic-title">MICROSERVIZI</span>
+    </div>
+    <div class="topic-body">
+      <p>Estendendo il concetto di <strong>SOA (Service-Oriented Architecture)</strong>, i <strong>microservizi</strong> scompongono un'applicazione in tanti piccoli processi autonomi e isolati, ognuno con il proprio database e ciclo di vita.</p>
+      <ul>
+        <li>Ogni microservizio è un'entità <strong>atomica indipendente</strong> che comunica con gli altri tramite <strong>API RESTful</strong>, indipendentemente dal linguaggio usato.</li>
+        <li>Si passa da <em>applicazioni monolitiche</em> (aggiornamento completo ad ogni modifica) a microservizi aggiornabili singolarmente.</li>
+        <li><strong>Vantaggi:</strong> condivisione tra applicazioni, facilità di compilazione, test e aggiornamento, scalabilità granulare.</li>
+        <li><strong>Svantaggi:</strong> un numero elevato aumenta il traffico di rete e richiede una gestione (<em>orchestrazione</em>) più complessa.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">8.2.3</span>
+      <span class="topic-title">CONTAINER</span>
+    </div>
+    <div class="topic-body">
+      <p>Un <strong>container</strong> è un'unità standard di software che impacchetta il codice con le sue dipendenze in un ambiente isolato e indipendente, eseguibile in modo identico su qualsiasi macchina (a parità di kernel e CPU).</p>
+      <p>Invece di virtualizzare l'intero stack hardware (come le VM), i container <strong>virtualizzano a livello del sistema operativo</strong>, condividendo il kernel dell'host.</p>
+
+      <div class="tbl-wrap" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>ASPETTO</th><th>MACCHINA VIRTUALE</th><th>CONTAINER</th></tr></thead>
+          <tbody>
+            <tr><td>Astrazione</td><td>Hardware (hypervisor)</td><td>Software (kernel del SO host)</td></tr>
+            <tr><td>Dimensioni</td><td>Pesanti (decine di GByte)</td><td>Leggeri (decine di MByte)</td></tr>
+            <tr><td>Avvio</td><td>Lento (boot completo)</td><td>Rapido</td></tr>
+            <tr><td>Isolamento</td><td>Completo (SO guest separato)</td><td>Per processo (kernel condiviso)</td></tr>
+            <tr><td>Portabilità</td><td>Dipendente dall'hypervisor</td><td>Alta (stessa immagine ovunque)</td></tr>
+            <tr><td>Uso tipico</td><td>Server enterprise, VDI</td><td>Microservizi, CI/CD, cloud-native</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="infobox cyan" style="margin-top:14px;">
+        <div class="infobox-title">ℹ Manifest File</div>
+        L'applicazione containerizzata è accompagnata da un <strong>manifest file</strong> con le metainformazioni (dipendenze, configurazione, regole di deploy). In Windows ha estensione <em>.manifest</em>.
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num green">8.2.4</span>
+      <span class="topic-title">CaaS — CONTAINER AS A SERVICE</span>
+    </div>
+    <div class="topic-body">
+      <p>Il <strong>CaaS (Container-as-a-Service)</strong> è un modello di servizio che rende del tutto trasparente la creazione e l'<em>orchestrazione</em> dei container (nodi, distribuzione nei data center cloud).</p>
+      <ul>
+        <li>Permette di usare i container senza gestire i dettagli sistemistici della loro creazione.</li>
+        <li>Le aziende si concentrano sulla scrittura del codice; le attività sistemistiche scompaiono progressivamente.</li>
+        <li><strong>Esempi di piattaforme CaaS:</strong> Google Container Engine (GKE), Amazon EC2 Container Service (ECS), Microsoft Azure Container Service (ACS), IBM Container Service.</li>
+        <li>L'<strong>orchestratore</strong> (es. Kubernetes) distribuisce, bilancia i carichi, replica i container in «pod» e gestisce storage e rete ridondante.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 8.3 -->
+  <div class="section-label">◈ 8.3 I modelli di distribuzione</div>
+
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num yellow">8.3</span>
+      <span class="topic-title">I QUATTRO MODELLI DI DISTRIBUZIONE DEL CLOUD</span>
+    </div>
+    <div class="topic-body">
+      <p>Il NIST definisce quattro modelli di distribuzione (<em>deployment models</em>) del cloud:</p>
+
+      <div class="subtopic">
+        <div class="subtopic-title">CLOUD PUBBLICO</div>
+        <ul>
+          <li>Servizi aperti al pubblico, accessibili via Internet tramite piattaforma del provider.</li>
+          <li>Hardware e infrastrutture fisicamente nella sede del provider.</li>
+          <li><strong>Vantaggi:</strong> costi ridotti (pay-per-use), scalabilità quasi illimitata, nessuna spesa di manutenzione, alta affidabilità.</li>
+          <li><strong>Svantaggi:</strong> nessun controllo diretto sull'infrastruttura; rischi di privacy; non sempre possibile scambiare dati tra fornitori.</li>
+          <li><em>Esempi: Azure (Microsoft), AWS (Amazon), GCP (Google), IBM Cloud.</em></li>
+        </ul>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title green">CLOUD PRIVATO</div>
+        <ul>
+          <li>Servizi riservati a una specifica azienda; infrastruttura (fisica o virtuale) gestita in rete privata.</li>
+          <li>Hardware e software dedicati esclusivamente all'organizzazione.</li>
+          <li><strong>Vantaggi:</strong> massimo controllo e sicurezza, personalizzazione, scalabilità paragonabile al pubblico.</li>
+          <li><strong>Svantaggi:</strong> non facilmente accessibile a utenti esterni; costi di gestione più elevati.</li>
+          <li><em>Soluzioni comuni: OpenStack (open source), VMware (proprietario).</em></li>
+        </ul>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title orange">CLOUD IBRIDO</div>
+        <ul>
+          <li>Combinazione di cloud privato e pubblico, usati in modo complementare.</li>
+          <li><strong>Vantaggi:</strong> controllo e sicurezza del privato + flessibilità del pubblico; migrazione graduale; convenienza (potenza aggiuntiva pagata solo quando serve).</li>
+          <li><strong>Casi d'uso tipici:</strong> dati sensibili su cloud privato, email/app su cloud pubblico; picchi di accesso gestiti col cloud pubblico.</li>
+          <li><strong>Multi-cloud:</strong> uso di più cloud pubblici di fornitori diversi per evitare dipendenza da un singolo ente.</li>
+          <li><strong>Rischio:</strong> piattaforme eterogenee difficili da integrare; applicazioni personalizzate su piattaforme specifiche.</li>
+        </ul>
+      </div>
+
+      <div class="subtopic">
+        <div class="subtopic-title yellow">CLOUD COMUNITARIO</div>
+        <ul>
+          <li>Simile al cloud privato, ma riservato a una comunità di organizzazioni con interessi comuni (stessa politica aziendale, requisiti di sicurezza, ecc.).</li>
+          <li>Può essere di proprietà dell'organizzazione o di un provider esterno.</li>
+        </ul>
+      </div>
+
+      <div class="tbl-wrap" style="margin-top:16px;">
+        <table>
+          <thead><tr><th>CARATTERISTICA</th><th>PUBBLICO</th><th>PRIVATO</th><th>IBRIDO</th><th>COMUNITARIO</th></tr></thead>
+          <tbody>
+            <tr><td>Accesso</td><td>Tutti</td><td>Solo l'azienda</td><td>Misto</td><td>Comunità definita</td></tr>
+            <tr><td>Controllo infrastruttura</td><td>No</td><td>Sì</td><td>Parziale</td><td>Condiviso</td></tr>
+            <tr><td>Costo</td><td>Pay-per-use</td><td>Alto fisso</td><td>Variabile</td><td>Condiviso</td></tr>
+            <tr><td>Sicurezza/Privacy</td><td>Minore</td><td>Massima</td><td>Bilanciata</td><td>Alta</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>◈ UNITÀ 8 · IL CLOUD COMPUTING ◈ · Sistemi &amp; Reti</footer>
+</div>
+</body>
+</html>

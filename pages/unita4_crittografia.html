@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 4 – La crittografia</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #c77dff;
+    --accent-rgb: 199, 125, 255;
+  }
+  
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+<header>
+  <div class="hbadge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+  <h1>UNITÀ 4 – <span>LA CRITTOGRAFIA</span></h1>
+  <p class="subtitle">// Cifratura · Autenticazione · Firma digitale · Blockchain //</p>
+</header>
+
+<!-- 4.1 -->
+<div class="slabel">◈ 4.1 La crittografia</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum">4.1</span><span class="ttitle">LA CRITTOGRAFIA</span></div>
+  <div class="tbody">
+    <p>La <strong>crittografia</strong> studia le tecniche matematiche per rendere sicuri i dati in termini di <em>confidenzialità, integrità, autenticazione e non-ripudio</em>. Dal greco <em>kryptós</em> (nascosto) + <em>graphía</em> (scrittura). Gli strumenti principali sono <strong>cifrari</strong> e <strong>funzioni hash</strong>.</p>
+
+    <div class="sub">
+      <div class="stitle">4.1.1 · OBIETTIVI DELLA CRITTOGRAFIA</div>
+      <ul>
+        <li><strong>Segretezza/Confidenzialità</strong>: utenti non autorizzati non possono intercettare o comprendere le informazioni</li>
+        <li><strong>Autenticazione</strong>: verifica dell'identità degli interlocutori</li>
+        <li><strong>Affidabilità dei documenti</strong>: integrità (non modificabilità) e non ripudiabilità (il mittente non può negare di aver inviato il messaggio)</li>
+      </ul>
+    </div>
+
+    <div class="sub b">
+      <div class="stitle">4.1.2 · STORIA: DA CESARE A ENIGMA</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>TECNICA</th><th>DESCRIZIONE</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag p">Cifrario di Cesare</span></td><td>Sostituzione monoalfabetica: ogni lettera spostata di k posti in avanti (chiave = numero di posti). Solo 25 chiavi possibili, vulnerabile all'analisi delle frequenze.</td></tr>
+            <tr><td><span class="tag g">Vigenère (XVI sec.)</span></td><td>Sostituzione polialfabetica: spostamento variabile in base a una parola chiave. Stesso carattere cifrato con lettere diverse.</td></tr>
+            <tr><td><span class="tag b">Principio di Kerckhoffs</span></td><td>Tenere segreto l'algoritmo non è essenziale. Ciò che conta è la <strong>segretezza della chiave</strong>.</td></tr>
+            <tr><td><span class="tag y">Enigma (WWII)</span></td><td>Macchina cifrante tedesca. La sua decrittazione (ad opera di Alan Turing) contribuì alla vittoria degli Alleati.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">4.1.3 · CRITTOGRAFIA SIMMETRICA (CHIAVE SEGRETA)</div>
+      <p>Mittente e destinatario usano la <strong>stessa chiave segreta</strong> per cifrare e decifrare. <em>D(C(m)) = m</em></p>
+      <div class="schema">
+        <div class="sbox" style="color:var(--acc3)">Testo in chiaro</div>
+        <div class="sarr">→</div>
+        <div class="sbox">Cifratura<br><small style="color:var(--dim)">chiave segreta</small></div>
+        <div class="sarr">→</div>
+        <div class="sbox" style="color:var(--acc4)">Testo cifrato</div>
+        <div class="sarr">→</div>
+        <div class="sbox">Decifratura<br><small style="color:var(--dim)">stessa chiave</small></div>
+        <div class="sarr">→</div>
+        <div class="sbox" style="color:var(--acc3)">Testo in chiaro</div>
+      </div>
+      <p><strong>Criticità</strong>: come scambiare la chiave in modo sicuro su un canale pubblico?</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>ALGORITMO</th><th>CARATTERISTICHE</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag p">DES</span></td><td>Primo standard. Blocchi 64 bit, chiave 56 bit. Usato per es. per il PIN del bancomat (con DES + PIN generation key).</td></tr>
+            <tr><td><span class="tag p">3DES</span></td><td>Tre esecuzioni di DES con tre chiavi. Chiave effettiva 168 bit. Modalità CBC (Cipher Block Chaining).</td></tr>
+            <tr><td><span class="tag g">AES</span></td><td>Standard NIST dal 2001. Blocchi 128 bit, chiavi 128/192/256 bit. Algoritmo di Rijndael. Molto efficiente.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub b">
+      <div class="stitle">4.1.4 · CRITTOGRAFIA ASIMMETRICA (CHIAVE PUBBLICA)</div>
+      <p>Introdotta da <strong>Diffie e Hellman nel 1976</strong>. Ogni utente ha una <strong>coppia di chiavi</strong>: una pubblica (distribuita a tutti) e una privata (solo del proprietario). Le chiavi sono correlate ma è computazionalmente impossibile ricavare la privata dalla pubblica.</p>
+      <div class="schema">
+        <div class="sbox" style="color:var(--acc3)">Alice<br>cifra con<br>chiave pubblica di Bob</div>
+        <div class="sarr">→</div>
+        <div class="sbox" style="color:var(--acc4)">Testo cifrato</div>
+        <div class="sarr">→</div>
+        <div class="sbox" style="color:var(--acc5)">Bob<br>decifra con<br>sua chiave privata</div>
+      </div>
+      <div class="ib b"><div class="ib-t">📌 Uso pratico ibrido</div>Le applicazioni spesso usano la crittografia asimmetrica per scambiare una <strong>chiave di sessione simmetrica</strong>, ottenendo i vantaggi di entrambe: sicurezza dello scambio chiave + velocità della cifratura simmetrica.</div>
+    </div>
+
+    <div class="sub y">
+      <div class="stitle">4.1.5 · ALGORITMO RSA</div>
+      <p>Algoritmo asimmetrico basato sul <strong>teorema di Fermat-Eulero</strong> e sulla difficoltà di fattorizzare in numeri primi. Pubblicato nel 1978.</p>
+      <ol>
+        <li>Scegliere p, q numeri primi grandi → <strong>n = p·q</strong></li>
+        <li>Calcolare <strong>m = (p−1)·(q−1)</strong></li>
+        <li>Scegliere e primo rispetto a m → <strong>chiave pubblica: (e, n)</strong></li>
+        <li>Calcolare k tale che [(e·k) mod m] = 1 → <strong>chiave privata: (k, n)</strong></li>
+        <li>Cifratura: <strong>C = M<sup>e</sup> mod n</strong></li>
+        <li>Decifratura: <strong>M = C<sup>k</sup> mod n</strong></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- 4.2 -->
+<div class="slabel">◈ 4.2 Autenticazione e affidabilità</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum g">4.2</span><span class="ttitle">AUTENTICAZIONE E AFFIDABILITÀ</span></div>
+  <div class="tbody">
+    <div class="sub">
+      <div class="stitle">4.2.1 · CONTROLLO DEGLI ACCESSI</div>
+      <p>Il controllo degli accessi determina chi può entrare/uscire da un sistema e cosa può fare. Si divide in:</p>
+      <div class="two">
+        <div class="cbox"><div class="cbox-t">Controllo Fisico</div>Serrature, videocamere, personale di sicurezza, allarmi anti-intrusione, porte blindate</div>
+        <div class="cbox b"><div class="cbox-t">Controllo Logico</div>Soluzioni HW/SW basate su: <strong>identificazione</strong> (chi sei), <strong>autenticazione</strong> (verifica identità), <strong>autorizzazione</strong> (definizione privilegi)</div>
+      </div>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">4.2.2 · AUTENTICAZIONE DEGLI UTENTI</div>
+      <p>I <strong>tre fattori di autenticazione</strong> (almeno due per un'autenticazione forte):</p>
+      <div class="three">
+        <div class="cbox g"><div class="cbox-t">Are (Sei)</div>Biometria: impronta digitale, retina, timbro vocale, firma, velocità di battitura</div>
+        <div class="cbox y"><div class="cbox-t">Have (Hai)</div>Oggetti fisici: smart card, chiavi, smartphone</div>
+        <div class="cbox b"><div class="cbox-t">Know (Sai)</div>Password, PIN, risposta a domanda segreta</div>
+      </div>
+      <div class="ib g"><div class="ib-t">🔑 Criteri password sicura (NIST)</div>Minimo 8 caratteri; mix maiuscole/minuscole/numeri/caratteri speciali; niente sequenze o parole comuni; cambio periodico; non condividerla. Es: "Ne1/2deca2m1n" richiederebbe 51 milioni di anni per essere scoperta!</div>
+    </div>
+
+    <div class="sub b">
+      <div class="stitle">4.2.3 · LA FIRMA DIGITALE</div>
+      <p>La <strong>firma digitale</strong> (valore legale in Italia dal 1997) garantisce: identità del mittente, integrità del documento, non ripudiabilità. Non garantisce la segretezza.</p>
+      <p>Funzionamento:</p>
+      <ol>
+        <li>Dal testo si calcola il <strong>digest</strong> (hash del messaggio)</li>
+        <li>Il digest è cifrato con la <strong>chiave privata del mittente</strong> → firma digitale</li>
+        <li>Testo in chiaro + firma vengono trasmessi</li>
+        <li>Il ricevente ricalcola il digest dal testo e lo confronta con quello estratto dalla firma (con chiave pubblica del mittente)</li>
+        <li>Se coincidono: documento integro e firma autentica</li>
+      </ol>
+      <div class="ib b"><div class="ib-t">📌 Funzioni di Hash</div><strong>MD5</strong> (128 bit, ora ritenuto non del tutto sicuro) · <strong>SHA-1</strong> (160 bit) · <strong>SHA-256</strong> (256 bit) · <strong>SHA-512</strong> (512 bit). Il digest è di lunghezza fissa, non reversibile e due messaggi diversi non producono lo stesso hash.</div>
+    </div>
+
+    <div class="sub y">
+      <div class="stitle">4.2.4 · CERTIFICATI DIGITALI E CERTIFICATION AUTHORITY</div>
+      <p>Il <strong>certificato digitale</strong> (Digital ID) autentica la chiave pubblica di un utente, confermando che appartiene veramente al proprietario. È emesso da una <strong>Certification Authority (CA)</strong>.</p>
+      <p>Struttura del certificato (standard X.509): numero di serie, dati del titolare, chiave pubblica, periodo di validità, nome CA, firma digitale della CA.</p>
+      <div class="ib y"><div class="ib-t">📌 Processo di certificazione</div>1. Il soggetto invia a CA i propri dati e la chiave pubblica → 2. CA autentica la chiave con la propria chiave privata → 3. CA rilascia il certificato firmato → 4. Alice verifica il certificato di Bob usando la chiave pubblica di CA.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4.3 -->
+<div class="slabel">◈ 4.3 La tecnologia Blockchain</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum o">4.3</span><span class="ttitle">LA RIVOLUZIONE DELLA BLOCKCHAIN</span></div>
+  <div class="tbody">
+    <p>La <strong>blockchain</strong> è la realizzazione del <em>Distributed Ledger</em> (libro mastro distribuito). Consente lo scambio peer-to-peer di informazioni in modo crittograficamente sicuro, senza un'autorità centrale.</p>
+    <div class="sub">
+      <div class="stitle">4.3.1 · ARCHITETTURA DELLA BLOCKCHAIN</div>
+      <p>Database distribuito sui nodi della rete. Le informazioni sono registrate come <strong>blocchi</strong> che, una volta inviati, non sono più modificabili senza l'approvazione della maggioranza dei nodi.</p>
+      <p>Ogni blocco contiene:</p>
+      <ul>
+        <li><strong>Block Header</strong>: hash del blocco precedente, Merkle Root, timestamp</li>
+        <li><strong>Transactions List</strong>: il messaggio/transazione</li>
+      </ul>
+      <p style="margin-top:10px">L'hash del blocco precedente è incluso in ogni blocco → <strong>catena di blocchi</strong>. Per falsificare un blocco si dovrebbe modificare tutti i blocchi successivi. Se i nodi hanno copie diverse, vale la <strong>versione della maggioranza</strong>.</p>
+    </div>
+    <div class="sub g">
+      <div class="stitle">4.3.2 · TIPI DI BLOCKCHAIN</div>
+      <div class="two">
+        <div class="cbox g">
+          <div class="cbox-t">Permissionless Ledger</div>
+          Aperta, senza proprietari, non controllata da un'autorità centrale. Es: <strong>Bitcoin, Ethereum</strong>. Candidata per lo scambio di valore (monetario, proprietà intellettuale, voto).
+        </div>
+        <div class="cbox y">
+          <div class="cbox-t">Permissioned Ledger</div>
+          Controllata, con proprietari. Un nuovo blocco richiede l'approvazione di un ente di controllo "trusted". Usata da banche e grandi imprese. Crea criptovalute stabili agganciate a monete fisiche.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>SICUREZZA DI UN SISTEMA INFORMATICO · UNITÀ 4 – LA CRITTOGRAFIA</footer>
+</div>
+</body>
+</html>

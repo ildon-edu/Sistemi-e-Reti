@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 3 – La sicurezza informatica</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #ff4757;
+    --accent-rgb: 255, 71, 87;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+<header>
+  <div class="hbadge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+  <h1>UNITÀ 3 – <span>LA SICUREZZA INFORMATICA</span></h1>
+  <p class="subtitle">// Vulnerabilità · Minacce · Attacchi · Difese · GDPR //</p>
+</header>
+
+<!-- 3.1 -->
+<div class="slabel">◈ 3.1 Introduzione alla sicurezza</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum">3.1</span><span class="ttitle">INTRODUZIONE ALLA SICUREZZA</span></div>
+  <div class="tbody">
+    <p>La <strong>sicurezza di un sistema informatico</strong> ha lo scopo di mantenere un sistema funzionante e operativo in qualsiasi momento, garantendo l'accesso ai dati solo al personale autorizzato. Coinvolge hardware, software, personale, dati e infrastrutture.</p>
+    <div class="sub g">
+      <div class="stitle">3.1.1 · LO SCENARIO</div>
+      <p>Gli attacchi informatici aumentano per complessità e frequenza. Nessuno è immune: varia solo la <strong>probabilità</strong> di essere colpiti in base al profilo dell'organizzazione.</p>
+      <div class="three">
+        <div class="cbox"><div class="cbox-t">Basso rischio</div>Privati, piccole aziende</div>
+        <div class="cbox y"><div class="cbox-t" style="color:var(--acc4)">Medio rischio</div>Aziende medio-grandi, produzione, commercio</div>
+        <div class="cbox g"><div class="cbox-t" style="color:var(--acc)">Alto rischio</div>Difesa, governo, banche, industrie alta tecnologia, finanza</div>
+      </div>
+    </div>
+    <div class="sub b">
+      <div class="stitle">3.1.2 · CHI ATTACCA E PERCHÉ</div>
+      <ul>
+        <li><strong>White Hat Hacker</strong>: usano le proprie abilità per scopi leciti, spesso assunti per la difesa dei sistemi</li>
+        <li><strong>Black Hat / Cracker</strong>: sfruttano le vulnerabilità per guadagno personale, danno o divertimento</li>
+        <li><strong>Gray Hat</strong>: commettono azioni illegali, ma non per guadagno personale</li>
+        <li><strong>Hacktivists</strong>: usano la rete per fini etici e diritti umani</li>
+        <li><strong>State Sponsored Hackers</strong>: governi usano hacker per obiettivi militari e politici</li>
+        <li><strong>Cyber terroristi</strong>: motivati da credo religiosi o politici, colpiscono infrastrutture critiche</li>
+      </ul>
+    </div>
+    <div class="sub">
+      <div class="stitle">3.1.3 · COME DIFENDERSI</div>
+      <p>La sicurezza assoluta non esiste. Un piano globale deve comprendere: valutazione delle vulnerabilità, protezione di applicazioni/SO/protocolli/apparati/infrastrutture fisiche, e soprattutto <strong>sensibilizzazione degli utenti</strong>.</p>
+      <p>Il processo di sicurezza è come una catena: la robustezza dipende dall'anello più debole. Standard come la famiglia <strong>ISO 27000</strong> guidano le organizzazioni con un approccio sistematico (ISMS – Information Security Management System).</p>
+      <div class="ib b"><div class="ib-t">📌 Security vs Safety</div><strong>Security</strong>: prevenzione da minacce esterne e attività criminali (cybersecurity). <strong>Safety</strong>: prevenzione da incidenti non intenzionali che causano danni a cose o persone.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.2 -->
+<div class="slabel">◈ 3.2 I principi della sicurezza informatica</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum b">3.2</span><span class="ttitle">IL TRIANGOLO CIA (RID)</span></div>
+  <div class="tbody">
+    <p>Il modello <strong>Cybersecurity Cube</strong> di McCumber identifica tre dimensioni: i principi CIA, la protezione dei dati in tutte le fasi, e il fattore umano.</p>
+    <div class="three">
+      <div class="cbox b">
+        <div class="cbox-t">Confidentiality (Riservatezza)</div>
+        I dati sono disponibili solo a chi è autorizzato. Garantita da: crittografia, autenticazione, controllo degli accessi, assegnazione privilegi.
+      </div>
+      <div class="cbox g">
+        <div class="cbox-t">Integrity (Integrità)</div>
+        I dati non devono essere alterati durante l'intero ciclo di vita. Garantita da: checksum, hashing (MD5, SHA-1, SHA-2), non-ripudio.
+      </div>
+      <div class="cbox y">
+        <div class="cbox-t">Availability (Disponibilità)</div>
+        I sistemi devono essere sempre accessibili. <em>High Availability</em>: regola "5 nove" = 99,999% uptime (&lt;5,26 min di fermo/anno). Garantita da: sistemi ridondanti, backup, disaster recovery.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.3 -->
+<div class="slabel">◈ 3.3 Vulnerabilità, minacce e attacchi</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum o">3.3</span><span class="ttitle">VULNERABILITÀ, MINACCE E ATTACCHI</span></div>
+  <div class="tbody">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>TERMINE</th><th>DEFINIZIONE</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag y">ASSET</span></td><td>Beni (dati e persone) da proteggere</td></tr>
+          <tr><td><span class="tag r">VULNERABILITÀ</span></td><td>Debolezza intrinseca del sistema (es. software non aggiornato, password debole, configurazione errata)</td></tr>
+          <tr><td><span class="tag o">DEBOLEZZA</span></td><td>Errori che possono condurre a vulnerabilità (es. CWE-120 Buffer Overflow)</td></tr>
+          <tr><td><span class="tag r">MINACCIA</span></td><td>Evento esterno che tende a violare un obiettivo di sicurezza (volontario o accidentale)</td></tr>
+          <tr><td><span class="tag o">EXPLOIT</span></td><td>Tentativo di sfruttare una vulnerabilità</td></tr>
+          <tr><td><span class="tag r">ATTACCO</span></td><td>Attività volontaria che sfrutta le vulnerabilità per rendere concreta una minaccia</td></tr>
+          <tr><td><span class="tag g">RISCHIO</span></td><td>Probabilità che un evento dannoso accada × impatto che causerebbe</td></tr>
+          <tr><td><span class="tag g">CONTROMISURE</span></td><td>Azioni per ridurre o eliminare le vulnerabilità</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub">
+      <div class="stitle">3.3.2 · LIVELLI DI MINACCIA</div>
+      <ul>
+        <li><strong>Livello fisico</strong>: danni ai dispositivi fisici, eventi naturali, incendi, blackout</li>
+        <li><strong>Livello di rete</strong>: danni a cavi, router, switch; sniffing; intercettazioni; assenza di crittografia</li>
+        <li><strong>Software di sistema</strong>: errori nel SO o DBMS; vulnerabilità non patchate</li>
+        <li><strong>Fattore umano</strong>: il livello più critico; include errori accidentali e comportamenti intenzionali</li>
+      </ul>
+    </div>
+
+    <div class="sub b">
+      <div class="stitle">3.3.4 · CLASSIFICAZIONE DEGLI ATTACCHI</div>
+      <p>Gli attacchi si dividono in <strong>passivi</strong> (intercettazione, sniffing, port scanning) e <strong>attivi</strong> (modifica dati, DoS, malware).</p>
+    </div>
+
+    <div class="sub o">
+      <div class="stitle">3.3.5 · MALWARE E KEYLOGGER</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>TIPO</th><th>CARATTERISTICHE</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag r">Virus</span></td><td>Si aggancia a software esistenti, risiede in memoria, si trasmette via file infetti. Può essere polimorfico.</td></tr>
+            <tr><td><span class="tag r">Worm</span></td><td>Programma autonomo, si diffonde via rete e posta elettronica sfruttando bug del SO. Non infetta altri programmi.</td></tr>
+            <tr><td><span class="tag r">Trojan</span></td><td>Si introduce come software utile ma compie azioni maligne. Non si autoreplica. CryptoLocker: cifra i dati e chiede riscatto.</td></tr>
+            <tr><td><span class="tag y">Bomba logica</span></td><td>Si attiva al verificarsi di un evento specifico (data, stato del sistema, nome utente).</td></tr>
+            <tr><td><span class="tag o">Keylogger</span></td><td>Registra i tasti digitati sulla tastiera per rubare password. Tipi: hardware (sul cavo) e software (installato di nascosto).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sub g">
+      <div class="stitle">3.3.6 · ATTIVITÀ DI HACKING</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>TECNICA</th><th>DESCRIZIONE</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag b">Spyware</span></td><td>Raccoglie segretamente informazioni sugli utenti per scopi pubblicitari o per inviare dati a remoto</td></tr>
+            <tr><td><span class="tag b">Adware</span></td><td>Software gratuiti con pubblicità integrata; a volte funzionano anche da spyware</td></tr>
+            <tr><td><span class="tag r">Phishing</span></td><td>E-mail falsa che finge di essere una banca/organizzazione per rubare credenziali</td></tr>
+            <tr><td><span class="tag o">Backdoor</span></td><td>Accesso segreto a un sistema installato da malware o da un programmatore. Permette controllo remoto.</td></tr>
+            <tr><td><span class="tag y">Spam</span></td><td>Mail non richieste con pubblicità o link pericolosi. Veicolo di malware e phishing.</td></tr>
+            <tr><td><span class="tag r">SQL Injection</span></td><td>Iniezione di istruzioni SQL nei campi di input per accedere ai dati riservati del database</td></tr>
+            <tr><td><span class="tag r">Man in the Middle</span></td><td>L'attaccante si interpone tra due interlocutori, intercetta e modifica i dati senza che se ne accorgano</td></tr>
+            <tr><td><span class="tag r">DoS / DDoS</span></td><td>Sovraccarico di un server con richieste per renderlo inutilizzabile. DDoS: attacco distribuito da più computer infetti (bot/zombie)</td></tr>
+            <tr><td><span class="tag o">Zero-day exploit</span></td><td>Attacco sferrato immediatamente dopo la scoperta di una vulnerabilità, prima che la vittima aggiorni il sistema</td></tr>
+            <tr><td><span class="tag y">Social Engineering</span></td><td>Manipolazione psicologica per strappare informazioni riservate spacciandosi per colleghi/tecnici</td></tr>
+            <tr><td><span class="tag r">APT</span></td><td>Advanced Persistent Threat: attacco mirato, sofisticato, persistente. Si introduce nei sistemi per rimanervi e sottrarre dati a lungo senza essere scoperto.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ib"><div class="ib-t">⚠ Ciclo di vita APT</div>1. Ricognizione e identificazione obiettivo → 2. Intrusione nella rete (phishing/malware) → 3. Creazione backdoor → 4. Furto credenziali + escalation privilegi → 5. Esfiltrazione dati → 6. Persistenza</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.4 -->
+<div class="slabel">◈ 3.4 Controllo dell'input</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum y">3.4</span><span class="ttitle">CONTROLLO DELL'INPUT</span></div>
+  <div class="tbody">
+    <div class="sub">
+      <div class="stitle">3.4.1 · BUFFER OVERFLOW</div>
+      <p>Debolezza nella gestione della memoria. Quando un programma non controlla la dimensione dell'input, tenta di scrivere oltre il buffer allocato, sovrascrivendo aree adiacenti con effetti devastanti. Classico errore in C (CWE-120).</p>
+    </div>
+    <div class="sub g">
+      <div class="stitle">3.4.2 · VALIDITÀ DELL'INPUT</div>
+      <p>È sempre buona norma controllare il valore e il tipo di ogni dato in input. Esempio: un campo quantità non validato potrebbe accettare valori negativi, invertendo addebiti in accrediti.</p>
+    </div>
+    <div class="sub b">
+      <div class="stitle">3.4.3 · SQL INJECTION</div>
+      <p>Iniezione di istruzioni SQL nei campi di un form per interrogare direttamente il database e accedere a dati riservati. <strong>Contromisura</strong>: validare sempre il tipo dell'input; verificare che i parametri numerici siano effettivamente numerici e nel range accettabile prima di eseguire la query.</p>
+    </div>
+    <div class="sub o">
+      <div class="stitle">3.4.4 · OS COMMAND INJECTION</div>
+      <p>Un malintenzionato prende il controllo di script lato server, eseguendo comandi arbitrari del sistema operativo passati come parametro.</p>
+    </div>
+    <div class="sub y">
+      <div class="stitle">3.4.5 · CROSS-SITE SCRIPTING (XSS) E CONTROLLO FORM IN PHP</div>
+      <p>Vulnerabilità che permette a un hacker di inserire script dannosi nelle pagine Web per raccogliere credenziali o diffondere malware. <strong>Contromisura</strong>: sanitizzare gli input con funzioni come <code>trim()</code>, <code>stripslashes()</code>, <code>htmlspecialchars()</code>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 3.5 -->
+<div class="slabel">◈ 3.5 Strumenti di monitoraggio e attacco</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum g">3.5</span><span class="ttitle">STRUMENTI DI MONITORAGGIO E ATTACCO</span></div>
+  <div class="tbody">
+    <div class="two">
+      <div class="cbox b">
+        <div class="cbox-t">3.5.1 Wireshark</div>
+        Analizzatore di protocolli di rete. Permette di monitorare il traffico, filtrare protocolli (IP, ICMP, TCP, UDP), ottenere info sui pacchetti e salvare sessioni per analisi successive.
+      </div>
+      <div class="cbox o">
+        <div class="cbox-t">3.5.2 Shodan</div>
+        Motore di ricerca per dispositivi IoT connessi in rete: webcam, stampanti, pannelli solari, impianti energetici. Usato per rilevare la superficie di attacco.
+      </div>
+    </div>
+    <div class="sub g" style="margin-top:16px">
+      <div class="stitle">3.5.3 · PING SWEEP E PORT SCAN</div>
+      <p><strong>Ping sweep</strong>: "spazzata" sugli indirizzi IP per individuare le macchine attive in una rete (<code>fping</code>, <code>gping</code>).</p>
+      <p><strong>Port scan</strong>: invio di pacchetti a ogni porta per scoprire quali servizi sono in ascolto.</p>
+    </div>
+    <div class="sub b">
+      <div class="stitle">3.5.4 · NMAP / ZENMAP</div>
+      <p>Software open source per la scansione delle reti. Determina host presenti, SO utilizzato, servizi erogati, stato delle porte (aperta/chiusa/filtrata). <strong>Zenmap</strong> è la versione grafica.</p>
+      <p>Esempio: <code>nmap -sn 192.168.1.0/24</code> → lista macchine attive nella rete.</p>
+      <div class="ib b"><div class="ib-t">🛡 Contromisura</div>Un <strong>firewall</strong> che filtra in base a regole è il metodo migliore per difendersi dal port scanning.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3.6 -->
+<div class="slabel">◈ 3.6 Progettare la sicurezza</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum b">3.6</span><span class="ttitle">PROGETTARE LA SICUREZZA</span></div>
+  <div class="tbody">
+    <p>La sicurezza si affronta a livello manageriale con un piano che include <strong>politiche, formazione del personale e procedure</strong>. Un documento programmatico deve definire: perché adottare un piano, chi è coinvolto, comportamenti consentiti/proibiti, metodi di autenticazione, gestione degli incidenti.</p>
+    <div class="sub">
+      <div class="stitle">3.6.1 · MODELLO PLAN-DO-CHECK-ACT</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>FASE</th><th>DESCRIZIONE</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag b">PLAN</span></td><td>Analisi del sistema, definizione Security Policy, Security Plan, Disaster Recovery Plan, valutazione del rischio</td></tr>
+            <tr><td><span class="tag g">DO</span></td><td>Implementazione delle azioni pianificate e attivazione dei test di controllo</td></tr>
+            <tr><td><span class="tag y">CHECK</span></td><td>Verifica dei risultati rispetto agli obiettivi attesi (Security Audits)</td></tr>
+            <tr><td><span class="tag o">ACT</span></td><td>Consolidamento azioni positive, introduzione di fattori correttivi, miglioramento continuo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:10px;font-size:14px">Il <strong>rischio</strong> può essere: <em>evitato</em>, <em>accettato</em>, <em>ridotto</em> (mitigato/affrontato), o <em>trasferito</em> (es. assicurazione).</p>
+    </div>
+    <div class="sub g">
+      <div class="stitle">3.6.2 · STANDARD ISO/IEC 27000</div>
+      <ul>
+        <li><strong>ISO 27001</strong>: requisiti per implementare un ISMS (Information Security Management System)</li>
+        <li><strong>ISO 27002</strong>: controlli di sicurezza e valutazione del rischio</li>
+        <li><strong>ISO 27017/27018</strong>: protezione dati sensibili nel cloud</li>
+        <li><strong>ISO 27701</strong>: sistema di gestione delle informazioni sulla privacy (PIMS)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 3.7 -->
+<div class="slabel">◈ 3.7 GDPR – La privacy e la protezione dei dati personali</div>
+<div class="topic">
+  <div class="topic-hd"><span class="tnum o">3.7</span><span class="ttitle">GDPR – GENERAL DATA PROTECTION REGULATION</span></div>
+  <div class="tbody">
+    <p>Il <strong>GDPR</strong> (Reg. UE 2016/679), operativo da maggio 2018 in tutti gli stati UE, regola il trattamento dei dati personali dei cittadini europei. Si applica anche ad aziende con sede fuori UE che trattano dati di cittadini europei.</p>
+    <div class="sub">
+      <div class="stitle">3.7.1 · PRINCIPI</div>
+      <ul>
+        <li>La tecnologia consente a imprese di usare dati personali su larga scala → necessità di regolamentazione</li>
+        <li>Identificativi online (IP, cookie, tag RFID) possono creare profili dettagliati degli individui</li>
+        <li>I <strong>minori</strong> meritano protezione specifica in quanto meno consapevoli dei rischi</li>
+      </ul>
+    </div>
+    <div class="sub b">
+      <div class="stitle">3.7.2 · TIPI DI DATI PERSONALI</div>
+      <div class="three">
+        <div class="cbox"><div class="cbox-t">Identificativi</div>Nome, cognome, indirizzo, IP, e-mail, geolocalizzazione, cookie</div>
+        <div class="cbox o"><div class="cbox-t" style="color:var(--acc2)">Sensibili</div>Razza, etnia, opinioni politiche, religione, salute, orientamento sessuale</div>
+        <div class="cbox g"><div class="cbox-t" style="color:var(--acc)">Supersensibili</div>Dati genetici e biometrici</div>
+      </div>
+    </div>
+    <div class="sub g">
+      <div class="stitle">3.7.3 · RESPONSABILIZZAZIONE</div>
+      <ul>
+        <li>Misure tecniche: <strong>pseudonimizzazione e cifratura</strong> dei dati</li>
+        <li>Garantire <strong>riservatezza, integrità, disponibilità e resilienza</strong> dei sistemi</li>
+        <li>Il <strong>consenso</strong> deve essere esplicito, tracciabile e revocabile</li>
+        <li>Violazioni dei dati devono essere notificate <strong>immediatamente</strong> → Registro delle Attività</li>
+        <li>Nomina obbligatoria del <strong>DPO</strong> (Data Protection Officer) per le PA</li>
+        <li><strong>Diritto alla portabilità</strong> dei dati (Art. 20): l'utente può trasferire i propri dati tra titolari</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer>SICUREZZA DI UN SISTEMA INFORMATICO · UNITÀ 3 – LA SICUREZZA INFORMATICA</footer>
+</div>
+</body>
+</html>

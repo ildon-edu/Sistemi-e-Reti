@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unità 2 – Servizi Internet</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  :root {
+    --accent:     #39ff8f;
+    --accent-rgb: 57, 255, 143;
+  }
+
+  header { text-align: center; margin-bottom: 50px; }
+
+  .header-badge, .hbadge {
+    display: inline-block; font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 16px; margin-bottom: 16px; position: relative;
+  }
+  .header-badge::before, .header-badge::after,
+  .hbadge::before,       .hbadge::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    border: 1px solid var(--accent); top: -3px;
+  }
+  .header-badge::before, .hbadge::before { left:  -3px; }
+  .header-badge::after,  .hbadge::after  { right: -3px; }
+
+  h1 {
+    font-family: var(--head); font-size: clamp(20px, 3.5vw, 34px);
+    font-weight: 900; color: #fff; letter-spacing: 2px; line-height: 1.2; margin-bottom: 10px;
+  }
+  h1 span, h1 em { color: var(--accent); font-style: normal; }
+
+  .subtitle {
+    font-family: var(--mono); color: var(--dim); font-size: 13px; letter-spacing: 1px;
+  }
+
+  /* ── SMTP flow (specifico unità 2) ─── */
+  .smtp-flow { display: flex; flex-direction: column; gap: 4px; margin: 12px 0; }
+  .smtp-row  { display: flex; align-items: flex-start; gap: 12px; padding: 7px 12px; border-radius: 3px; font-family: var(--mono); font-size: 12px; }
+  .smtp-row.from-client { background: rgba(0,200,255,0.06); border-left: 2px solid var(--cyan); }
+  .smtp-row.from-server { background: rgba(57,255,143,0.06); border-left: 2px solid var(--green); }
+  .smtp-dir  { font-size: 10px; letter-spacing: 1px; flex-shrink: 0; margin-top: 1px; }
+  .smtp-row.from-client .smtp-dir { color: var(--cyan); }
+  .smtp-row.from-server .smtp-dir { color: var(--green); }
+  .smtp-cmd  { color: #fff; font-weight: 700; }
+  .smtp-note { color: var(--dim); font-size: 11px; margin-left: 6px; }
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+  <header>
+    <div class="header-badge">◈ INFORMATICA · SISTEMI &amp; RETI ◈</div>
+    <h1>UNITÀ 2 – <span>SERVIZI INTERNET</span></h1>
+    <p class="subtitle">// DNS · Posta elettronica · FTP //</p>
+  </header>
+
+  <!-- ══════════════════════════ 2.1 DNS ══════════════════════════ -->
+  <div class="section-label">◈ 2.1 DNS – Domain Name System</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num">2.1</span>
+      <span class="topic-title">DNS – DOMAIN NAME SYSTEM</span>
+    </div>
+    <div class="topic-body">
+      <p>Il <strong>DNS</strong> (Domain Name System) è stato creato per convertire gli indirizzi IP numerici in <strong>nomi semplici e riconoscibili</strong> (es. <code>www.wikipedia.it</code> invece di <code>91.198.174.192</code>). Funziona come una rubrica mondiale automaticamente aggiornata.</p>
+      <p>Il protocollo DNS è a livello applicazione e utilizza di default il protocollo di trasporto <strong>UDP sulla porta 53</strong> (ma può usare anche TCP).</p>
+      <p>Il sistema DNS è un <strong>grande database distribuito</strong> organizzato in migliaia di server DNS in rete, che garantisce efficienza, affidabilità e robustezza. Non esiste un'unica macchina con tutti i nomi: ogni DNS ha autorità solo per il dominio di sua competenza.</p>
+
+      <!-- 2.1.1 -->
+      <div class="subtopic">
+        <div class="subtopic-title">2.1.1 · GERARCHIA DI DOMINIO</div>
+        <p>Il DNS assegna uno <strong>spazio gerarchico dei nomi</strong> alle risorse in Internet. La gerarchia è visualizzabile come un <strong>albero</strong> in cui ogni nodo corrisponde a un dominio e alle foglie corrispondono i calcolatori.</p>
+        <p>Le etichette si leggono <strong>da destra verso sinistra</strong>. Per esempio in <code>www.iana.org</code>:</p>
+        <ul>
+          <li><strong>org</strong> → dominio di primo livello (TLD)</li>
+          <li><strong>iana</strong> → dominio di secondo livello</li>
+          <li><strong>www</strong> → nome del server (host)</li>
+        </ul>
+        <div class="tbl-wrap" style="margin-top:14px;">
+          <table>
+            <thead><tr><th colspan="2">gTLD (Generic Top Level Domain)</th><th>ccTLD (Country Code)</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>sTLD (Sponsored)</strong><br><span class="tag green">.edu</span> <span class="tag green">.gov</span> <span class="tag green">.mil</span> <span class="tag green">.museum</span></td>
+                <td><strong>uTLD (Unsponsored)</strong><br><span class="tag cyan">.com</span> <span class="tag cyan">.net</span> <span class="tag cyan">.org</span> <span class="tag cyan">.info</span> <span class="tag cyan">.biz</span></td>
+                <td><span class="tag orange">.it</span> Italia<br><span class="tag orange">.uk</span> Regno Unito<br><span class="tag orange">.fr</span> Francia<br><span class="tag orange">.us</span> USA</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="infobox" style="margin-top:12px;">
+          <div class="infobox-title">📌 Registrazione domini</div>
+          I nomi devono essere accettati e associati a un indirizzo IP da <strong>ICANN</strong> (Internet Corporation for Assigned Names and Numbers). In Italia i domini <code>.it</code> sono gestiti dal <strong>NIC</strong> (organo del CNR, con sede a Pisa).
+        </div>
+      </div>
+
+      <!-- 2.1.2 -->
+      <div class="subtopic cyan">
+        <div class="subtopic-title">2.1.2 · RECORD DELLE RISORSE E MESSAGGI DNS</div>
+        <p>L'albero dei domini è diviso in <strong>zone</strong>. Ogni zona mantiene informazioni organizzate in <strong>record delle risorse</strong> nella forma:</p>
+        <div class="code-block">
+&lt;<span class="kw">Name</span>, <span class="val">Value</span>, <span class="cmt">Type, Class, TTL</span>&gt;
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>TYPE</th><th>DESCRIZIONE</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag cyan">A</span></td><td>Indirizzo IPv4 del dispositivo</td></tr>
+              <tr><td><span class="tag green">AAAA</span></td><td>Indirizzo IPv6 del dispositivo</td></tr>
+              <tr><td><span class="tag orange">MX</span></td><td>Mail eXchange – nome del server di posta</td></tr>
+              <tr><td><span class="tag yellow">NS</span></td><td>Authoritative Name Server – nome del server che sa risolvere i nomi del dominio</td></tr>
+              <tr><td><span class="tag cyan">CNAME</span></td><td>Nome canonico – definisce nomi alternativi (alias) per un calcolatore</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px;">I messaggi DNS (sia richiesta che risposta) hanno lo stesso formato, composto da: <strong>Header, Question, Answer, Authoritative, Additional</strong>.</p>
+        <ul>
+          <li><strong>TTL</strong> (Time To Live): indica per quanto tempo il record è valido nella cache di un server</li>
+          <li><strong>Class IN</strong>: indica che la classe è Internet</li>
+        </ul>
+      </div>
+
+      <!-- 2.1.3 -->
+      <div class="subtopic">
+        <div class="subtopic-title">2.1.3 · STRUTTURA E INTERROGAZIONE DEL DNS</div>
+        <p>La struttura del DNS è simile a un file system ad albero. Alla radice ci sono i <strong>root name server</strong> (poco più di una decina nel mondo, per lo più negli USA). Essi contengono l'elenco dei server responsabili dei TLD.</p>
+        <p>Sequenza di una risoluzione DNS per <code>www.paperus.com</code>:</p>
+        <ol>
+          <li>Il computer (A) chiede l'IP al suo <strong>server DNS locale</strong> (B)</li>
+          <li>Se il server locale non ha il record in cache, interroga un <strong>root server</strong> (C)</li>
+          <li>Il root server restituisce l'indirizzo del server autoritativo per <strong>.com</strong> (D)</li>
+          <li>Il server <code>.com</code> viene interrogato e risponde con l'indirizzo del server per <strong>.paperus</strong> (E)</li>
+          <li>Il server <code>.paperus</code> restituisce l'IP dell'host <strong>www</strong></li>
+          <li>Il server locale <strong>salva il risultato in cache</strong> e lo restituisce al computer</li>
+        </ol>
+        <div class="infobox yellow">
+          <div class="infobox-title">💡 Comandi utili</div>
+          <strong>ipconfig /displaydns</strong> → mostra la cache DNS locale (Windows) · <strong>ipconfig /flushdns</strong> → svuota la cache · <strong>nslookup [dominio]</strong> → interroga il server DNS e recupera record e indirizzi IP
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ 2.2 POSTA ELETTRONICA ══════════════════════════ -->
+  <div class="section-label">◈ 2.2 La posta elettronica</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num orange">2.2</span>
+      <span class="topic-title">LA POSTA ELETTRONICA</span>
+    </div>
+    <div class="topic-body">
+      <p>La posta elettronica è tra i servizi più antichi e stabili di Internet, fondamentale nelle attività aziendali per lo scambio di messaggi e file digitali. I protocolli usati (<strong>SMTP, POP3, IMAP</strong>) sono stati creati quando sicurezza e spam non erano priorità, ma nel tempo sono stati integrati con estensioni.</p>
+
+      <!-- 2.2.1 -->
+      <div class="subtopic">
+        <div class="subtopic-title">2.2.1 · CARATTERISTICHE DELLA POSTA ELETTRONICA</div>
+        <p>La posta elettronica è un mezzo di comunicazione <strong>asincrono</strong>: consente lo scambio anche se mittente e destinatario non sono connessi contemporaneamente.</p>
+        <ul>
+          <li>Un client non invia direttamente al client remoto: si appoggia a un <strong>server</strong> che memorizza e inoltra i messaggi (<em>store &amp; forward</em>)</li>
+          <li>Ogni casella di posta ha un indirizzo univoco: <strong>nome_mailbox @ nome_server</strong></li>
+          <li><strong>User Agent</strong>: programma usato dall'utente per comporre, inviare e ricevere messaggi</li>
+          <li><strong>Transfer Agent</strong>: programma che trasferisce i messaggi tra server di posta</li>
+        </ul>
+        <div class="two-col" style="margin-top:12px;">
+          <div class="col-box c-cyan">
+            <div class="col-box-title">Invio</div>
+            Protocollo <strong>SMTP</strong> – dal client al server del mittente, poi al server del destinatario
+          </div>
+          <div class="col-box c-orange">
+            <div class="col-box-title">Ricezione</div>
+            Protocolli <strong>POP3</strong> o <strong>IMAP</strong> – dal server del destinatario al client del destinatario
+          </div>
+        </div>
+        <div class="infobox cyan" style="margin-top:12px;">
+          <div class="infobox-title">📌 Webmail</div>
+          Le applicazioni <strong>Webmail</strong> (es. Gmail) forniscono accesso alla casella di posta tramite Web da qualsiasi postazione. Sono considerate client di posta a tutti gli effetti.
+        </div>
+      </div>
+
+      <!-- 2.2.2 -->
+      <div class="subtopic cyan">
+        <div class="subtopic-title">2.2.2 · STRUTTURA DI UN MESSAGGIO</div>
+        <p>Un messaggio di posta elettronica è composto da tre parti:</p>
+        <div class="three-col">
+          <div class="col-box c-cyan">
+            <div class="col-box-title">Busta (Envelope)</div>
+            Incapsula il messaggio. Contiene indirizzo mittente, destinatario, priorità, sicurezza. Usata dagli agenti per l'inoltro.
+          </div>
+          <div class="col-box c-yellow">
+            <div class="col-box-title">Intestazione (Header)</div>
+            Informazioni di controllo in formato <code>nome_campo: valore</code>. Campi principali: <strong>From, To, Subject, Date, Cc, Bcc, Reply-to</strong>
+          </div>
+          <div class="col-box">
+            <div class="col-box-title">Corpo (Body)</div>
+            Testo del messaggio destinato al lettore. Codificato in ASCII a 7 bit o MIME per allegati multimediali.
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2.3 -->
+      <div class="subtopic orange">
+        <div class="subtopic-title">2.2.3 · MIME – Multipurpose Internet Mail Extensions</div>
+        <p>Il formato originale ASCII era inadeguato per lettere accentate, alfabeti non latini e allegati multimediali. <strong>MIME</strong> (RFC 1521, RFC 822) estende il formato dei messaggi mantenendo la compatibilità ASCII.</p>
+        <p>Nuove intestazioni introdotte da MIME:</p>
+        <ul>
+          <li><strong>MIME-Version:</strong> indica che il messaggio è in formato MIME (es. <code>MIME-Version: 1.0</code>)</li>
+          <li><strong>Content-Type:</strong> specifica la natura del body (es. <code>text/html</code>, <code>text/plain</code>, <code>image/jpeg</code>)</li>
+          <li><strong>Content-Transfer-Encoding:</strong> identifica la codifica dei dati (es. <code>base64</code>)</li>
+          <li><strong>Content-Description:</strong> descrizione testuale del contenuto</li>
+          <li><strong>Content-ID:</strong> codice identificativo del contenuto</li>
+        </ul>
+        <div class="infobox orange">
+          <div class="infobox-title">📌 MIME e HTTP</div>
+          Il campo <strong>Content-Type</strong> è usato anche come metainformazione nel protocollo HTTP.
+        </div>
+      </div>
+
+      <!-- 2.2.4 -->
+      <div class="subtopic">
+        <div class="subtopic-title">2.2.4 · PROTOCOLLO SMTP</div>
+        <p><strong>SMTP</strong> (Simple Mail Transfer Protocol, RFC 5321) si occupa di stabilire la connessione tra mittente e destinatario e trasferire il messaggio. Lavora sulla <strong>porta 25</strong>, usa <strong>TCP</strong> come trasporto.</p>
+        <p>Il protocollo si articola in tre fasi: <strong>apertura (handshaking) → trasferimento → chiusura</strong>.</p>
+        <p>Client e server comunicano tramite stringhe di testo: il client invia comandi di 4 caratteri, il server risponde con codici di stato a 3 cifre.</p>
+        <div class="smtp-flow">
+          <div class="smtp-row from-server"><span class="smtp-dir">SERVER ›</span><span><span class="smtp-cmd">220</span> xyz.com SMTP ready<span class="smtp-note">// server pronto sulla porta 25</span></span></div>
+          <div class="smtp-row from-client"><span class="smtp-dir">CLIENT ›</span><span><span class="smtp-cmd">HELO</span> abc.com<span class="smtp-note">// saluto con nome mittente</span></span></div>
+          <div class="smtp-row from-server"><span class="smtp-dir">SERVER ›</span><span><span class="smtp-cmd">250</span> xyz.com says hello...<span class="smtp-note">// confermato</span></span></div>
+          <div class="smtp-row from-client"><span class="smtp-dir">CLIENT ›</span><span><span class="smtp-cmd">MAIL FROM:</span> paolo@abc.com<span class="smtp-note">// mittente</span></span></div>
+          <div class="smtp-row from-server"><span class="smtp-dir">SERVER ›</span><span><span class="smtp-cmd">250</span> sender ok</span></div>
+          <div class="smtp-row from-client"><span class="smtp-dir">CLIENT ›</span><span><span class="smtp-cmd">RCPT TO:</span> aaa@xyz.com<span class="smtp-note">// destinatario</span></span></div>
+          <div class="smtp-row from-server"><span class="smtp-dir">SERVER ›</span><span><span class="smtp-cmd">250</span> recipient OK</span></div>
+          <div class="smtp-row from-client"><span class="smtp-dir">CLIENT ›</span><span><span class="smtp-cmd">DATA</span><span class="smtp-note">// inizio dati</span></span></div>
+          <div class="smtp-row from-server"><span class="smtp-dir">SERVER ›</span><span><span class="smtp-cmd">354</span> Start mail input; end with &lt;CRLF&gt;.&lt;CRLF&gt;</span></div>
+          <div class="smtp-row from-client"><span class="smtp-dir">CLIENT ›</span><span><span class="smtp-cmd">&lt;intestazione + corpo&gt;</span></span></div>
+          <div class="smtp-row from-client"><span class="smtp-dir">CLIENT ›</span><span><span class="smtp-cmd">&lt;CRLF&gt;.&lt;CRLF&gt;</span><span class="smtp-note">// fine messaggio</span></span></div>
+          <div class="smtp-row from-server"><span class="smtp-dir">SERVER ›</span><span><span class="smtp-cmd">250</span> Mail accepted</span></div>
+          <div class="smtp-row from-client"><span class="smtp-dir">CLIENT ›</span><span><span class="smtp-cmd">QUIT</span><span class="smtp-note">// chiudi connessione</span></span></div>
+          <div class="smtp-row from-server"><span class="smtp-dir">SERVER ›</span><span><span class="smtp-cmd">221</span> xyz.com closing connection</span></div>
+        </div>
+        <div class="tbl-wrap" style="margin-top:14px;">
+          <table>
+            <thead><tr><th>ERRORE SMTP</th><th>SIGNIFICATO</th></tr></thead>
+            <tbody>
+              <tr><td>MAILBOX FULL</td><td>Casella del destinatario piena</td></tr>
+              <tr><td>USER UNKNOWN</td><td>L'indirizzo di posta non esiste</td></tr>
+              <tr><td>ROUTING SERVER FAILURE</td><td>Il dominio non esiste</td></tr>
+              <tr><td>DELIVERY TIME EXPIRED</td><td>Il destinatario non riceve dopo ripetuti tentativi</td></tr>
+              <tr><td>MESSAGE TOO BIG</td><td>Il messaggio supera il limite accettato dal server</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2.2.5 -->
+      <div class="subtopic cyan">
+        <div class="subtopic-title">2.2.5 · SMTP CON AUTENTICAZIONE</div>
+        <p>Il protocollo SMTP originale non prevedeva autenticazione, facilitando spam e phishing. L'estensione <strong>SMTP Service Extension for Authentication</strong> (RFC 4954) aggiunge un'autenticazione prima della connessione.</p>
+        <ul>
+          <li>Si usa il comando <strong>EHLO</strong> (Extended Hello) invece di HELO per indicare il supporto alle estensioni</li>
+          <li>Il server risponde con l'elenco delle estensioni supportate (es. AUTH, LOGIN…)</li>
+          <li>Il client invia il comando <strong>AUTH LOGIN</strong> con username e password codificate in <strong>Base64</strong></li>
+        </ul>
+      </div>
+
+      <!-- 2.2.6 -->
+      <div class="subtopic yellow">
+        <div class="subtopic-title">2.2.6 · PROTOCOLLO POP3</div>
+        <p><strong>POP3</strong> (Post Office Protocol v3, RFC 1939) permette al client di scaricare i messaggi dalla mail-box sul computer locale. Usa la <strong>porta 110</strong> di TCP.</p>
+        <p>Si articola in tre fasi: <strong>apertura → trasferimento (autenticazione + transazione) → aggiornamento e chiusura</strong>.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>COMANDO</th><th>DESCRIZIONE</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag yellow">USER</span></td><td>Identifica l'utente (autenticazione)</td></tr>
+              <tr><td><span class="tag yellow">PASS</span></td><td>Invia la password in chiaro</td></tr>
+              <tr><td><span class="tag cyan">LIST</span></td><td>Elenca i messaggi con le rispettive dimensioni in byte</td></tr>
+              <tr><td><span class="tag cyan">STAT</span></td><td>Numero di messaggi e spazio occupato</td></tr>
+              <tr><td><span class="tag green">RETR</span></td><td>Recupera e visualizza un messaggio</td></tr>
+              <tr><td><span class="tag orange">DELE</span></td><td>Contrassegna un messaggio per la cancellazione</td></tr>
+              <tr><td><span class="tag orange">QUIT</span></td><td>Termina la sessione e cancella i messaggi marcati</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="infobox yellow" style="margin-top:10px;">
+          <div class="infobox-title">⚠ Modalità download-and-delete</div>
+          POP3 opera in modalità <strong>download-and-delete</strong>: dopo lo scaricamento, i messaggi vengono <strong>cancellati dal server</strong> e salvati solo localmente.
+        </div>
+      </div>
+
+      <!-- 2.2.7 -->
+      <div class="subtopic">
+        <div class="subtopic-title">2.2.7 · IMAP – Internet Mail Access Protocol</div>
+        <p>IMAP è un'alternativa a POP3 (ideata da Mark Crispin nel 1986) che permette di gestire i messaggi direttamente sul server, <strong>senza necessariamente scaricarli in locale</strong>. È ideale per chi lavora in mobilità o usa più dispositivi.</p>
+        <ul>
+          <li>I messaggi originali rimangono sul server fino alla cancellazione manuale</li>
+          <li>Mantiene la <strong>sincronizzazione</strong> tra client e server</li>
+          <li>Permette di leggere solo l'intestazione o parti del messaggio senza download</li>
+          <li>Usa la <strong>porta 143</strong> (o 993 con SSL)</li>
+        </ul>
+        <p style="margin-top:10px;">Comandi base IMAP:</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>COMANDO</th><th>FUNZIONE</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag green">LOGIN</span></td><td>Connessione al server IMAP con credenziali</td></tr>
+              <tr><td><span class="tag cyan">SELECT</span></td><td>Selezione della cartella (es. INBOX)</td></tr>
+              <tr><td><span class="tag yellow">SEARCH</span></td><td>Ricerca ed elenco messaggi con filtri</td></tr>
+              <tr><td><span class="tag cyan">FETCH</span></td><td>Lettura del messaggio (o delle sue parti)</td></tr>
+              <tr><td><span class="tag orange">EXPUNGE</span></td><td>Cancellazione definitiva dei messaggi con flag Deleted</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="infobox cyan" style="margin-top:12px;">
+          <div class="infobox-title">⚖ POP3 vs IMAP</div>
+          <strong>POP3</strong>: scarica e cancella dal server, adatto a un solo dispositivo, funziona offline.<br>
+          <strong>IMAP</strong>: mantiene i messaggi sul server, adatto a più dispositivi, richiede connessione.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ 2.3 FTP ══════════════════════════ -->
+  <div class="section-label">◈ 2.3 Protocollo FTP</div>
+  <div class="topic">
+    <div class="topic-header">
+      <span class="topic-num yellow">2.3</span>
+      <span class="topic-title">PROTOCOLLO FTP – FILE TRANSFER PROTOCOL</span>
+    </div>
+    <div class="topic-body">
+      <p><strong>FTP</strong> (File Transfer Protocol, RFC 959 – 1985) è un protocollo di livello applicativo usato per trasferire file su un server remoto. Utilizza <strong>due canali TCP</strong> distinti:</p>
+      <div class="two-col">
+        <div class="col-box c-cyan">
+          <div class="col-box-title">Canale di Controllo</div>
+          <strong>Porta 21</strong> – per l'invio dei comandi. Sempre attivo durante la sessione.
+        </div>
+        <div class="col-box c-yellow">
+          <div class="col-box-title">Canale Dati</div>
+          <strong>Porta 20</strong> (modalità attiva) – per il trasferimento dei file effettivi.
+        </div>
+      </div>
+      <p style="margin-top:14px;">A differenza di HTTP, FTP permette di <strong>navigare nel file system</strong> remoto ed eseguire operazioni sui file (copia, cancellazione, spostamento, upload, download…).</p>
+
+      <!-- 2.3.1 -->
+      <div class="subtopic">
+        <div class="subtopic-title">2.3.1 · ACCESSO FTP</div>
+        <div class="two-col">
+          <div class="col-box c-green">
+            <div class="col-box-title">Accesso Autenticato</div>
+            <ul>
+              <li>Username e password specifici</li>
+              <li>Accesso completo in base ai permessi</li>
+              <li>Autenticazione in chiaro → non sicuro</li>
+              <li>Versione sicura: <strong>FTPS</strong> (con SSL) o <strong>SFTP</strong> (via SSH)</li>
+            </ul>
+          </div>
+          <div class="col-box c-orange">
+            <div class="col-box-title">Accesso Anonimo</div>
+            <ul>
+              <li>Si digita "<code>anonymous</code>" come login</li>
+              <li>Nessuna password richiesta</li>
+              <li>Operazioni limitate (es. solo download)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3.2 -->
+      <div class="subtopic cyan">
+        <div class="subtopic-title">2.3.2 · FUNZIONAMENTO – MODALITÀ ATTIVA E PASSIVA</div>
+        <p>Una sessione FTP si articola in quattro fasi: <strong>richiesta → autenticazione → trasferimento → chiusura</strong>.</p>
+        <p>FTP supporta due modalità per il canale dati:</p>
+        <div class="two-col">
+          <div class="col-box c-cyan">
+            <div class="col-box-title">Modalità Attiva</div>
+            <ul>
+              <li>Il client invia al server il comando <strong>PORT</strong> con il numero di porta da usare</li>
+              <li>Il server avvia la connessione dati dalla sua <strong>porta 20</strong> verso il client</li>
+              <li>Problema: il client potrebbe essere bloccato da un firewall</li>
+            </ul>
+          </div>
+          <div class="col-box c-yellow">
+            <div class="col-box-title">Modalità Passiva (consigliata)</div>
+            <ul>
+              <li>Il client invia al server il comando <strong>PASV</strong></li>
+              <li>Il server sceglie una porta casuale (1024–5000) e la comunica al client</li>
+              <li>È il <strong>client</strong> che apre la connessione dati → più sicuro con firewall</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3.3 -->
+      <div class="subtopic yellow">
+        <div class="subtopic-title">2.3.3 · COMANDI FTP</div>
+        <p>Il server interpreta i comandi ricevuti dal client, li esegue e risponde con un <strong>codice di tre cifre</strong>.</p>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>FUNZIONE</th><th>COMANDO</th><th>DESCRIZIONE</th></tr></thead>
+            <tbody>
+              <tr><td>Connessione</td><td><span class="tag yellow">open</span></td><td>Apre la connessione al sito FTP</td></tr>
+              <tr><td>Chiusura</td><td><span class="tag orange">quit</span></td><td>Termina la sessione</td></tr>
+              <tr><td rowspan="3">Trasferimento file</td><td><span class="tag green">get</span></td><td>Download: preleva un file dal server</td></tr>
+              <tr><td><span class="tag cyan">put</span></td><td>Upload: copia un file sul server</td></tr>
+              <tr><td><span class="tag orange">delete</span></td><td>Rimuove un file dalla directory corrente</td></tr>
+              <tr><td rowspan="4">Navigazione</td><td><span class="tag cyan">pwd</span></td><td>Mostra la directory corrente sul server</td></tr>
+              <tr><td><span class="tag cyan">ls / dir</span></td><td>Elenca i file nella directory</td></tr>
+              <tr><td><span class="tag cyan">cd</span></td><td>Cambia directory</td></tr>
+              <tr><td><span class="tag cyan">mkdir</span></td><td>Crea una nuova directory</td></tr>
+              <tr><td>Aiuto</td><td><span class="tag green">help / ?</span></td><td>Mostra l'elenco dei comandi disponibili</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-wrap" style="margin-top:14px;">
+          <table>
+            <thead><tr><th>CODICE</th><th>SIGNIFICATO</th></tr></thead>
+            <tbody>
+              <tr><td><span class="tag cyan">1yz</span></td><td>Risposta preliminare positiva – seguirà ulteriore risposta</td></tr>
+              <tr><td><span class="tag green">2yz</span></td><td>Comando eseguito con successo (es. 200, 226)</td></tr>
+              <tr><td><span class="tag yellow">3yz</span></td><td>Risposta intermedia – in attesa di ulteriori informazioni</td></tr>
+              <tr><td><span class="tag orange">4yz</span></td><td>Comando non eseguito correttamente</td></tr>
+              <tr><td><span class="tag orange">5yz</span></td><td>Comando che il server non ha potuto eseguire</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    IL WEB E I SERVIZI INTERNET · UNITÀ 2 – SERVIZI INTERNET · INFORMATICA · RETI
+  </footer>
+
+</div>
+</body>
+</html>
